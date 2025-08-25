@@ -90,7 +90,6 @@ const HomePage = () => {
 
   const handleWorkflowSelect = (workflow) => {
     console.log('Workflow selected:', workflow);
-    setSelectedWorkflow(workflow);
     navigate(`/${workflow}`);
   };
 
