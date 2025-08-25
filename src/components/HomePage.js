@@ -9,7 +9,18 @@ const HomePage = () => {
 
   const [showHRPanel, setShowHRPanel] = useState(false);
   const navigate = useNavigate();
-  const { addScore, loseLife } = useGame();
+  
+  // Add error handling for useGame
+  let addScore, loseLife;
+  try {
+    const gameContext = useGame();
+    addScore = gameContext.addScore;
+    loseLife = gameContext.loseLife;
+  } catch (error) {
+    console.error('Game context error:', error);
+    addScore = () => {};
+    loseLife = () => {};
+  }
 
   const handleSendMessage = (message) => {
     if (!message || !message.trim()) return;

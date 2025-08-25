@@ -10,8 +10,19 @@ import FloatingEmoji from './components/FloatingEmoji';
 import { GameProvider, useGame } from './context/GameContext';
 
 const AppContent = () => {
-  const { score, lives, gameOver, floatingEmoji, setFloatingEmoji } = useGame();
+  let score = 0, lives = 3, gameOver = false, floatingEmoji = null, setFloatingEmoji = () => {};
   
+  try {
+    const gameContext = useGame();
+    score = gameContext.score;
+    lives = gameContext.lives;
+    gameOver = gameContext.gameOver;
+    floatingEmoji = gameContext.floatingEmoji;
+    setFloatingEmoji = gameContext.setFloatingEmoji;
+  } catch (error) {
+    console.error('Game context error in AppContent:', error);
+  }
+
   return (
     <div className="App">
       <Routes>
@@ -23,7 +34,7 @@ const AppContent = () => {
       <GameTracker score={score} lives={lives} />
       <GameOverModal isVisible={gameOver} finalScore={score} />
       {floatingEmoji && (
-        <FloatingEmoji 
+        <FloatingEmoji
           emoji={floatingEmoji.emoji}
           message={floatingEmoji.message}
           onComplete={() => setFloatingEmoji(null)}
