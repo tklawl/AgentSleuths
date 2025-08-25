@@ -108,11 +108,9 @@ const HomePage = () => {
     if (message.hasError) {
       // Correct! User found an error
       addScore();
-      alert('✅ Correct! You found an error! +1 point');
     } else {
       // Incorrect! User clicked on a non-error message
       loseLife();
-      alert('❌ Wrong! That message is correct. -1 life');
     }
   };
 

@@ -949,3 +949,78 @@ code {
   transform: translateY(0);
   box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
+
+/* Floating Emoji */
+.floating-emoji {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.floating-emoji.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.floating-emoji.fade-out {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.emoji-container {
+  background: white;
+  border-radius: 50px;
+  padding: 16px 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: emojiFloat 2s ease-out;
+}
+
+@keyframes emojiFloat {
+  0% {
+    transform: translateY(20px) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    transform: translateY(0) scale(1.1);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20px) scale(0.9);
+    opacity: 0;
+  }
+}
+
+.emoji {
+  font-size: 32px;
+  animation: emojiBounce 0.6s ease-out;
+}
+
+@keyframes emojiBounce {
+  0% {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.message {
+  font-size: 16px;
+  font-weight: 600;
+  color: #495057;
+  white-space: nowrap;
+}

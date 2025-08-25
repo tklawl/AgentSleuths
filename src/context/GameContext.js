@@ -14,9 +14,14 @@ export const GameProvider = ({ children }) => {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [gameOver, setGameOver] = useState(false);
+  const [floatingEmoji, setFloatingEmoji] = useState(null);
 
   const addScore = () => {
     setScore(prev => prev + 1);
+    setFloatingEmoji({
+      emoji: '✅',
+      message: 'Correct! +1 point'
+    });
   };
 
   const loseLife = () => {
@@ -28,21 +33,28 @@ export const GameProvider = ({ children }) => {
       }
       return newLives;
     });
+    setFloatingEmoji({
+      emoji: '❌',
+      message: 'Wrong! -1 life'
+    });
   };
 
   const resetGame = () => {
     setScore(0);
     setLives(3);
     setGameOver(false);
+    setFloatingEmoji(null);
   };
 
   const value = {
     score,
     lives,
     gameOver,
+    floatingEmoji,
     addScore,
     loseLife,
-    resetGame
+    resetGame,
+    setFloatingEmoji
   };
 
   return (

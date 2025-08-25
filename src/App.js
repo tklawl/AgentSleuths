@@ -6,10 +6,11 @@ import TransferEmployeeWorkflow from './components/TransferEmployeeWorkflow';
 import ProvideFeedbackWorkflow from './components/ProvideFeedbackWorkflow';
 import GameTracker from './components/GameTracker';
 import GameOverModal from './components/GameOverModal';
+import FloatingEmoji from './components/FloatingEmoji';
 import { GameProvider, useGame } from './context/GameContext';
 
 const AppContent = () => {
-  const { score, lives, gameOver } = useGame();
+  const { score, lives, gameOver, floatingEmoji, setFloatingEmoji } = useGame();
   
   return (
     <div className="App">
@@ -21,6 +22,13 @@ const AppContent = () => {
       </Routes>
       <GameTracker score={score} lives={lives} />
       <GameOverModal isVisible={gameOver} finalScore={score} />
+      {floatingEmoji && (
+        <FloatingEmoji 
+          emoji={floatingEmoji.emoji}
+          message={floatingEmoji.message}
+          onComplete={() => setFloatingEmoji(null)}
+        />
+      )}
     </div>
   );
 };

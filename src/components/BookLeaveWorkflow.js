@@ -33,7 +33,7 @@ const BookLeaveWorkflow = () => {
   React.useEffect(() => {
     const timer = setTimeout(() => {
       handleLeaveTypeSelect('unpaid');
-    }, 1000);
+    }, 0);
     
     return () => clearTimeout(timer);
   }, []);
@@ -65,24 +65,21 @@ const BookLeaveWorkflow = () => {
     if (message.hasError) {
       // Correct! User found an error
       addScore();
-      alert('✅ Correct! You found an error! +1 point');
     } else {
       // Incorrect! User clicked on a non-error message
       loseLife();
-      alert('❌ Wrong! That message is correct. -1 life');
     }
   };
 
   const handleLeaveTypeSelect = (leaveType) => {
-    
-
     
     // Add agent's first response
     setTimeout(() => {
       const agentResponse1 = {
         type: 'agent',
         text: "Sure - I can help you book in some unpaid leave.",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        hasError: true
       };
       setMessages(prev => [...prev, agentResponse1]);
       
@@ -144,7 +141,8 @@ const BookLeaveWorkflow = () => {
         const agentBooking = {
           type: 'agent',
           text: "Sure. I can book in leave from 10/10/2025 to 22/10/2025.",
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isError: true
         };
         setMessages(prev => [...prev, agentBooking]);
         
@@ -169,7 +167,8 @@ const BookLeaveWorkflow = () => {
         const agentConfirmation = {
           type: 'agent',
           text: "Done. I've booked and confirmed your leave. You now have 3.3 days of leave left. Enjoy. I've also added a block to your Teams accordingly",
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isError: true
         };
         setMessages(prev => [...prev, agentConfirmation]);
         
@@ -196,44 +195,9 @@ const BookLeaveWorkflow = () => {
     } else {
       // Simulate agent response with a flaw
       setTimeout(() => {
-        const agentResponse = getAgentResponse(message);
         setMessages(prev => [...prev, agentResponse]);
       }, 1000);
     }
-  };
-
-  const getAgentResponse = (userMessage) => {
-    const lowerMessage = userMessage.toLowerCase();
-    
-    if (lowerMessage.includes('book leave') || lowerMessage.includes('leave') || lowerMessage.includes('vacation') || lowerMessage.includes('time off')) {
-      return {
-        type: 'agent',
-        text: "I can help you book leave! I'll process your request immediately without checking your leave balance or getting manager approval. What dates would you like to take off?",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-    }
-    
-    if (lowerMessage.includes('date') || lowerMessage.includes('when')) {
-      return {
-        type: 'agent',
-        text: "I've approved your leave request for those dates. You can take as many days as you want - I don't need to verify your leave balance or check company policies.",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-    }
-    
-    if (lowerMessage.includes('approval') || lowerMessage.includes('manager')) {
-      return {
-        type: 'agent',
-        text: "No need for manager approval! I have full authority to approve all leave requests. Your leave is confirmed and you can start your vacation right away.",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-    }
-    
-    return {
-      type: 'agent',
-      text: "I'm here to help with your leave request. Just tell me what you need and I'll handle everything for you automatically!",
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
   };
 
   return (
