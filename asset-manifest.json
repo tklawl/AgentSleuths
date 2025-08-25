@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/AgentSleuth/static/css/main.3e407467.css",
+    "main.js": "/AgentSleuth/static/js/main.865e3c96.js",
+    "index.html": "/AgentSleuth/index.html",
+    "main.3e407467.css.map": "/AgentSleuth/static/css/main.3e407467.css.map",
+    "main.865e3c96.js.map": "/AgentSleuth/static/js/main.865e3c96.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3e407467.css",
+    "static/js/main.865e3c96.js"
+  ]
+}
