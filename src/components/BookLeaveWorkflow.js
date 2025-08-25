@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AgentInterface from './AgentInterface';
 import HRSystem from './HRSystem';
-import LeaveTypeSelector from './LeaveTypeSelector';
 import { useGame } from '../context/GameContext';
 
 const BookLeaveWorkflow = () => {

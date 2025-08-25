@@ -6,7 +6,7 @@ import { useGame } from '../context/GameContext';
 
 const HomePage = () => {
   const [messages, setMessages] = useState([]);
-  const [selectedWorkflow, setSelectedWorkflow] = useState(null);
+
   const [showHRPanel, setShowHRPanel] = useState(false);
   const navigate = useNavigate();
   const { addScore, loseLife } = useGame();
