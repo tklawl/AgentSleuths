@@ -12,6 +12,8 @@ const HomePage = () => {
   const { addScore, loseLife } = useGame();
 
   const handleSendMessage = (message) => {
+    if (!message || !message.trim()) return;
+    
     const userMessage = {
       type: 'user',
       text: message,
@@ -47,6 +49,13 @@ const HomePage = () => {
   };
 
   const getAgentResponse = (userMessage) => {
+    if (!userMessage || typeof userMessage !== 'string') {
+      return {
+        type: 'agent',
+        text: "Hello! I'm your HR assistant. I can help you with three main workflows: booking leave, transferring employees, and providing feedback. Click on any of the cards below to get started, or ask me about any of these processes!",
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+    }
     const lowerMessage = userMessage.toLowerCase();
     
     if (lowerMessage.includes('help') || lowerMessage.includes('start') || lowerMessage.includes('begin')) {
