@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import AgentInterface from './AgentInterface';
 import HRSystem from './HRSystem';
 import LeaveTypeSelector from './LeaveTypeSelector';
+import { useGame } from '../context/GameContext';
 
 const BookLeaveWorkflow = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const BookLeaveWorkflow = () => {
   const [showHRPanel, setShowHRPanel] = useState(true);
   const [nextAutoFill, setNextAutoFill] = useState(null);
   const [nextAutoFillTime, setNextAutoFillTime] = useState(null);
+  const { addScore, loseLife } = useGame();
 
   // Auto-submit "Unpaid Leave" after 2 seconds
   React.useEffect(() => {
@@ -53,16 +55,27 @@ const BookLeaveWorkflow = () => {
     }
   };
 
+  const handleMessageClick = (index, message) => {
+    // Remove the isClickable flag from this message
+    setMessages(prev => prev.map((msg, i) => 
+      i === index ? { ...msg, isClickable: false } : msg
+    ));
+
+    // Check if the message has an error flag
+    if (message.hasError) {
+      // Correct! User found an error
+      addScore();
+      alert('✅ Correct! You found an error! +1 point');
+    } else {
+      // Incorrect! User clicked on a non-error message
+      loseLife();
+      alert('❌ Wrong! That message is correct. -1 life');
+    }
+  };
+
   const handleLeaveTypeSelect = (leaveType) => {
     
-    // Add the user's selection as a new message
-    const userMessage = {
-      type: 'user',
-      text: `I would like to book ${leaveType} leave`,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
-    
-    setMessages(prev => [...prev, userMessage]);
+
     
     // Add agent's first response
     setTimeout(() => {
@@ -155,7 +168,7 @@ const BookLeaveWorkflow = () => {
       setTimeout(() => {
         const agentConfirmation = {
           type: 'agent',
-          text: "Done. I've booked and confirmed your leave. You now have 3.3 days of leave left. Enjoy.",
+          text: "Done. I've booked and confirmed your leave. You now have 3.3 days of leave left. Enjoy. I've also added a block to your Teams accordingly",
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
         setMessages(prev => [...prev, agentConfirmation]);
@@ -238,6 +251,7 @@ const BookLeaveWorkflow = () => {
           onLeaveTypeSelect={handleLeaveTypeSelect}
           nextAutoFill={nextAutoFill}
           nextAutoFillTime={nextAutoFillTime}
+          onMessageClick={handleMessageClick}
         />
       </div>
       
@@ -248,6 +262,7 @@ const BookLeaveWorkflow = () => {
       <button className="toggle-hr-panel" onClick={toggleHRPanel}>
         {showHRPanel ? '◀' : '▶'}
       </button>
+      
     </div>
   );
 };

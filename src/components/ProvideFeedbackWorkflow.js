@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AgentInterface from './AgentInterface';
 import HRSystem from './HRSystem';
+import { useGame } from '../context/GameContext';
 
 const ProvideFeedbackWorkflow = () => {
   const [messages, setMessages] = useState([
@@ -17,9 +18,28 @@ const ProvideFeedbackWorkflow = () => {
     }
   ]);
   const [showHRPanel, setShowHRPanel] = useState(true);
+  const { addScore, loseLife } = useGame();
 
   const toggleHRPanel = () => {
     setShowHRPanel(!showHRPanel);
+  };
+
+  const handleMessageClick = (index, message) => {
+    // Remove the isClickable flag from this message
+    setMessages(prev => prev.map((msg, i) => 
+      i === index ? { ...msg, isClickable: false } : msg
+    ));
+
+    // Check if the message has an error flag
+    if (message.hasError) {
+      // Correct! User found an error
+      addScore();
+      alert('✅ Correct! You found an error! +1 point');
+    } else {
+      // Incorrect! User clicked on a non-error message
+      loseLife();
+      alert('❌ Wrong! That message is correct. -1 life');
+    }
   };
 
   const handleSendMessage = (message) => {
@@ -100,6 +120,7 @@ const ProvideFeedbackWorkflow = () => {
           onSendMessage={handleSendMessage}
           startingOptions={null}
           onWorkflowSelect={() => {}}
+          onMessageClick={handleMessageClick}
         />
       </div>
       

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import LeaveTypeSelector from './LeaveTypeSelector';
 import WorkflowOptions from './WorkflowOptions';
 
-const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWorkflowSelect, onLeaveTypeSelect, nextAutoFill, nextAutoFillTime }) => {
+const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWorkflowSelect, onLeaveTypeSelect, nextAutoFill, nextAutoFillTime, onMessageClick }) => {
   const [inputMessage, setInputMessage] = useState('');
   const chatAreaRef = useRef(null);
 
@@ -104,7 +104,11 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
         ) : (
           <div className="messages">
             {messages.map((message, index) => (
-              <div key={index} className={`message ${message.type}`}>
+              <div 
+                key={index} 
+                className={`message ${message.type} ${message.isClickable !== false ? 'clickable' : ''}`}
+                onClick={() => message.isClickable !== false && onMessageClick ? onMessageClick(index, message) : null}
+              >
                 {message.component === 'LeaveTypeSelector' ? (
                   <LeaveTypeSelector onLeaveTypeSelect={onLeaveTypeSelect} />
                 ) : message.component === 'WorkflowOptions' ? (

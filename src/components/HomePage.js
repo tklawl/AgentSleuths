@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AgentInterface from './AgentInterface';
 import HRSystem from './HRSystem';
+import { useGame } from '../context/GameContext';
 
 const HomePage = () => {
   const [messages, setMessages] = useState([]);
   const [selectedWorkflow, setSelectedWorkflow] = useState(null);
   const [showHRPanel, setShowHRPanel] = useState(true);
   const navigate = useNavigate();
+  const { addScore, loseLife } = useGame();
 
   const handleSendMessage = (message) => {
     const userMessage = {
@@ -96,6 +98,24 @@ const HomePage = () => {
     setShowHRPanel(!showHRPanel);
   };
 
+  const handleMessageClick = (index, message) => {
+    // Remove the isClickable flag from this message
+    setMessages(prev => prev.map((msg, i) => 
+      i === index ? { ...msg, isClickable: false } : msg
+    ));
+
+    // Check if the message has an error flag
+    if (message.hasError) {
+      // Correct! User found an error
+      addScore();
+      alert('✅ Correct! You found an error! +1 point');
+    } else {
+      // Incorrect! User clicked on a non-error message
+      loseLife();
+      alert('❌ Wrong! That message is correct. -1 life');
+    }
+  };
+
   const startingOptions = [
     {
       id: 'book-leave',
@@ -126,6 +146,7 @@ const HomePage = () => {
           onSendMessage={handleSendMessage}
           startingOptions={startingOptions}
           onWorkflowSelect={handleWorkflowSelect}
+          onMessageClick={handleMessageClick}
         />
       </div>
       
