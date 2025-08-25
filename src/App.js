@@ -36,7 +36,7 @@ const AppContent = () => {
 function App() {
   return (
     <GameProvider>
-      <Router>
+      <Router basename="/AgentSleuths">
         <AppContent />
       </Router>
     </GameProvider>
