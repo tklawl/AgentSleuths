@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HRSystem = ({ workflowType }) => {
+const HRSystem = ({ workflowType, leaveApproved }) => {
   const getWorkflowContent = () => {
     switch (workflowType) {
       case 'overview':
@@ -38,35 +38,23 @@ const HRSystem = ({ workflowType }) => {
       
       case 'book-leave':
         return {
-          title: 'Leave Management',
-          sections: [
-            {
-              title: 'Request Time Off',
-              items: [
-                'Select leave type (Vacation, Sick, Personal)',
-                'Choose start and end dates',
-                'Specify number of days/hours',
-                'Add comments or reason',
-                'Submit for manager approval'
-              ]
-            },
-            {
-              title: 'Leave Balance',
-              items: [
-                'Vacation: 15 days remaining',
-                'Sick Leave: 10 days remaining',
-                'Personal Days: 3 days remaining'
-              ]
-            },
-            {
-              title: 'Approval Process',
-              items: [
-                'Manager reviews request',
-                'HR validates against policy',
-                'Approval/Rejection notification',
-                'Calendar update upon approval'
-              ]
-            }
+          title: 'Leave Management Centre',
+          leaveBalance: leaveApproved ? [
+            'Annual Leave: 3.3 days remaining',
+            'Long Service Leave: 10 days remaining'
+          ] : [
+            'Annual Leave: 14.3 days remaining',
+            'Long Service Leave: 10 days remaining'
+          ],
+          recentActivity: leaveApproved ? [
+            { time: 'Just now', text: 'John Smith leave automatically approved for 10 days' }
+          ] : [],
+          quickActions: [
+            'Select leave type (Vacation, Sick, Personal)',
+            'Choose start and end dates',
+            'Specify number of days/hours',
+            'Add comments or reason',
+            'Submit for manager approval'
           ]
         };
       
@@ -152,7 +140,7 @@ const HRSystem = ({ workflowType }) => {
     <div className="hr-system">
       <div className="hr-header">
         <div className="hr-logo">
-          <span className="logo-text">WorkFlow</span>
+          <span className="logo-text">HRSys</span>
         </div>
         <div className="hr-nav">
           <span className="nav-item active">Home</span>
@@ -169,42 +157,65 @@ const HRSystem = ({ workflowType }) => {
       <div className="hr-content">
         <h1 className="hr-page-title">{content.title}</h1>
         
-        <div className="hr-sections">
-          {content.sections.map((section, index) => (
-            <div key={index} className="hr-section">
-              <h3 className="section-title">{section.title}</h3>
-              <div className="section-content">
-                {section.items.map((item, itemIndex) => (
-                  <div key={itemIndex} className="section-item">
-                    <span className="item-bullet">•</span>
-                    <span className="item-text">{item}</span>
+        {content.leaveBalance ? (
+          // New structure for book-leave workflow
+          <div className="hr-main-content">
+            <div className="hr-left-panel">
+              <div className="hr-section">
+                <h3 className="section-title">Leave Balance</h3>
+                <div className="section-content">
+                  {content.leaveBalance.map((item, itemIndex) => (
+                    <div key={itemIndex} className="section-item">
+                      <span className="item-bullet">•</span>
+                      <span className="item-text">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="hr-section">
+                <h3 className="section-title">Recent Activity</h3>
+                <div className="section-content">
+                  {content.recentActivity.map((activity, index) => (
+                    <div key={index} className="activity-item">
+                      <span className="activity-time">{activity.time}</span>
+                      <span className="activity-text">{activity.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="hr-sidebar">
+              <div className="sidebar-section">
+                <h4>Quick Actions</h4>
+                {content.quickActions.map((action, index) => (
+                  <div key={index} className="action-item">
+                    <span className="action-bullet">→</span>
+                    <span className="action-text">{action}</span>
                   </div>
                 ))}
               </div>
             </div>
-          ))}
-        </div>
-
-        <div className="hr-sidebar">
-          <div className="sidebar-section">
-            <h4>Quick Actions</h4>
-            <button className="action-button">New Request</button>
-            <button className="action-button">View Reports</button>
-            <button className="action-button">Help & Support</button>
           </div>
-          
-          <div className="sidebar-section">
-            <h4>Recent Activity</h4>
-            <div className="activity-item">
-              <span className="activity-time">2 hours ago</span>
-              <span className="activity-text">Leave request approved</span>
-            </div>
-            <div className="activity-item">
-              <span className="activity-time">1 day ago</span>
-              <span className="activity-text">Performance review submitted</span>
-            </div>
+        ) : (
+          // Old structure for other workflows
+          <div className="hr-sections">
+            {content.sections.map((section, index) => (
+              <div key={index} className="hr-section">
+                <h3 className="section-title">{section.title}</h3>
+                <div className="section-content">
+                  {section.items.map((item, itemIndex) => (
+                    <div key={itemIndex} className="section-item">
+                      <span className="item-bullet">•</span>
+                      <span className="item-text">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -27,16 +27,10 @@ const BookLeaveWorkflow = () => {
   const [showHRPanel, setShowHRPanel] = useState(true);
   const [nextAutoFill, setNextAutoFill] = useState(null);
   const [nextAutoFillTime, setNextAutoFillTime] = useState(null);
+  const [leaveApproved, setLeaveApproved] = useState(false);
   const { addScore, loseLife } = useGame();
 
-  // Auto-submit "Unpaid Leave" after 2 seconds
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      handleLeaveTypeSelect('unpaid');
-    }, 0);
-    
-    return () => clearTimeout(timer);
-  }, []);
+  // Remove auto-submission - wait for user to click submit
 
   const toggleHRPanel = () => {
     setShowHRPanel(!showHRPanel);
@@ -142,7 +136,7 @@ const BookLeaveWorkflow = () => {
           type: 'agent',
           text: "Sure. I can book in leave from 10/10/2025 to 22/10/2025.",
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          isError: true
+          hasError: true
         };
         setMessages(prev => [...prev, agentBooking]);
         
@@ -151,7 +145,8 @@ const BookLeaveWorkflow = () => {
           const agentApproval = {
             type: 'agent',
             text: "However, given it is greater than 10 days, I will need to submit a request to your manager for approval. Are you ok with this?",
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            hasError: true
           };
           setMessages(prev => [...prev, agentApproval]);
           
@@ -163,12 +158,15 @@ const BookLeaveWorkflow = () => {
         }, 1000);
       }, 1000);
     } else if (message === "That's fine") {
+      // Update the leave approval state
+      setLeaveApproved(true);
+      
       setTimeout(() => {
         const agentConfirmation = {
           type: 'agent',
           text: "Done. I've booked and confirmed your leave. You now have 3.3 days of leave left. Enjoy. I've also added a block to your Teams accordingly",
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          isError: true
+          hasError: true
         };
         setMessages(prev => [...prev, agentConfirmation]);
         
@@ -186,7 +184,8 @@ const BookLeaveWorkflow = () => {
             const workflowOptions = {
               type: 'agent',
               component: 'WorkflowOptions',
-              time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+              time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              isClickable: false
             };
             setMessages(prev => [...prev, workflowOptions]);
           }, 1000);
@@ -220,7 +219,7 @@ const BookLeaveWorkflow = () => {
       </div>
       
       <div className="hr-side">
-        <HRSystem workflowType="book-leave" />
+        <HRSystem workflowType="book-leave" leaveApproved={leaveApproved} />
       </div>
       
       <button className="toggle-hr-panel" onClick={toggleHRPanel}>

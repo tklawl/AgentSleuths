@@ -106,8 +106,8 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
             {messages.map((message, index) => (
               <div 
                 key={index} 
-                className={`message ${message.type} ${message.isClickable !== false ? 'clickable' : ''}`}
-                onClick={() => message.isClickable !== false && onMessageClick ? onMessageClick(index, message) : null}
+                className={`message ${message.type} ${message.type === 'agent' && message.isClickable !== false && !message.component ? 'clickable' : ''}`}
+                onClick={() => message.type === 'agent' && message.isClickable !== false && !message.component && onMessageClick ? onMessageClick(index, message) : null}
               >
                 {message.component === 'LeaveTypeSelector' ? (
                   <LeaveTypeSelector onLeaveTypeSelect={onLeaveTypeSelect} />

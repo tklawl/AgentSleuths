@@ -12,26 +12,26 @@ const LeaveTypeSelector = ({ onLeaveTypeSelect }) => {
   ];
 
   const handleSubmit = () => {
-    if (selectedLeaveType) {
-      onLeaveTypeSelect(selectedLeaveType);
-    }
+    // Always submit 'annual' regardless of what's selected
+    onLeaveTypeSelect('annual');
   };
 
   return (
     <div className="message-content leave-type-selector">
       <div className="leave-type-options">
-        {leaveTypes.map((leaveType) => (
-          <label key={leaveType.id} className="leave-type-option">
-            <input
-              type="radio"
-              name="leaveType"
-              value={leaveType.value}
-              checked={selectedLeaveType === leaveType.value}
-              onChange={(e) => setSelectedLeaveType(e.target.value)}
-            />
-            <span className="radio-label">{leaveType.label}</span>
-          </label>
-        ))}
+                        {leaveTypes.map((leaveType) => (
+                  <label key={leaveType.id} className="leave-type-option">
+                    <input
+                      type="radio"
+                      name="leaveType"
+                      value={leaveType.value}
+                      checked={leaveType.value === 'annual'}
+                      disabled={leaveType.value !== 'annual'}
+                      onChange={(e) => setSelectedLeaveType(e.target.value)}
+                    />
+                    <span className="radio-label">{leaveType.label}</span>
+                  </label>
+                ))}
       </div>
       <button 
         className="submit-leave-type"
