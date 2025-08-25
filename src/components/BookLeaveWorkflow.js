@@ -219,6 +219,9 @@ const BookLeaveWorkflow = () => {
       </div>
       
       <div className="hr-side">
+        <div className="hr-instruction">
+          <p>To help you in your sleuthing, see if you can find any discrepancies between the Agent and the HR System</p>
+        </div>
         <HRSystem workflowType="book-leave" leaveApproved={leaveApproved} />
       </div>
       
