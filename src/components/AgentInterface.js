@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import LeaveTypeSelector from './LeaveTypeSelector';
+import WorkflowOptions from './WorkflowOptions';
 
 const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWorkflowSelect, onLeaveTypeSelect, nextAutoFill, nextAutoFillTime }) => {
   const [inputMessage, setInputMessage] = useState('');
@@ -106,6 +107,8 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
               <div key={index} className={`message ${message.type}`}>
                 {message.component === 'LeaveTypeSelector' ? (
                   <LeaveTypeSelector onLeaveTypeSelect={onLeaveTypeSelect} />
+                ) : message.component === 'WorkflowOptions' ? (
+                  <WorkflowOptions onWorkflowSelect={onWorkflowSelect} />
                 ) : (
                   <div className="message-content">{message.text}</div>
                 )}

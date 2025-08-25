@@ -672,3 +672,58 @@ code {
   color: #495057;
   line-height: 1.4;
 }
+
+/* Workflow Options */
+.workflow-options {
+  max-width: 600px;
+  width: fit-content;
+}
+
+.workflow-options .options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.workflow-options .option-card {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  user-select: none;
+}
+
+.workflow-options .option-card:hover {
+  border-color: #007bff;
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.2);
+  transform: translateY(-3px);
+  background: #f8f9ff;
+}
+
+.workflow-options .option-card:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+}
+
+.workflow-options .card-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.workflow-options .card-content h3 {
+  font-size: 16px;
+  color: #2c3e50;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.workflow-options .card-content p {
+  font-size: 13px;
+  color: #6c757d;
+  line-height: 1.4;
+  margin: 0;
+}

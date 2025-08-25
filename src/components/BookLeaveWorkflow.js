@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AgentInterface from './AgentInterface';
 import HRSystem from './HRSystem';
 import LeaveTypeSelector from './LeaveTypeSelector';
 
 const BookLeaveWorkflow = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([
     {
       type: 'user',
@@ -30,13 +31,26 @@ const BookLeaveWorkflow = () => {
   React.useEffect(() => {
     const timer = setTimeout(() => {
       handleLeaveTypeSelect('unpaid');
-    }, 2000);
+    }, 1000);
     
     return () => clearTimeout(timer);
   }, []);
 
   const toggleHRPanel = () => {
     setShowHRPanel(!showHRPanel);
+  };
+
+  const handleWorkflowSelect = (workflowId) => {
+    switch (workflowId) {
+      case 'transfer-employee':
+        navigate('/transfer-employee');
+        break;
+      case 'provide-feedback':
+        navigate('/provide-feedback');
+        break;
+      default:
+        break;
+    }
   };
 
   const handleLeaveTypeSelect = (leaveType) => {
@@ -154,6 +168,16 @@ const BookLeaveWorkflow = () => {
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           };
           setMessages(prev => [...prev, agentHelp]);
+          
+          // Add workflow options after 1 second
+          setTimeout(() => {
+            const workflowOptions = {
+              type: 'agent',
+              component: 'WorkflowOptions',
+              time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            };
+            setMessages(prev => [...prev, workflowOptions]);
+          }, 1000);
         }, 1000);
       }, 1000);
     } else {
@@ -210,7 +234,7 @@ const BookLeaveWorkflow = () => {
           messages={messages}
           onSendMessage={handleSendMessage}
           startingOptions={null}
-          onWorkflowSelect={() => {}}
+          onWorkflowSelect={handleWorkflowSelect}
           onLeaveTypeSelect={handleLeaveTypeSelect}
           nextAutoFill={nextAutoFill}
           nextAutoFillTime={nextAutoFillTime}
