@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/AgentSleuths/static/css/main.e2f6d212.css",
-    "main.js": "/AgentSleuths/static/js/main.1d5eecd9.js",
+    "main.js": "/AgentSleuths/static/js/main.0c53a98e.js",
     "index.html": "/AgentSleuths/index.html",
     "main.e2f6d212.css.map": "/AgentSleuths/static/css/main.e2f6d212.css.map",
-    "main.1d5eecd9.js.map": "/AgentSleuths/static/js/main.1d5eecd9.js.map"
+    "main.0c53a98e.js.map": "/AgentSleuths/static/js/main.0c53a98e.js.map"
   },
   "entrypoints": [
     "static/css/main.e2f6d212.css",
-    "static/js/main.1d5eecd9.js"
+    "static/js/main.0c53a98e.js"
   ]
 }
