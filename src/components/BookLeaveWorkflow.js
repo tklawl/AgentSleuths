@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AgentInterface from './AgentInterface';
 import HRSystem from './HRSystem';
+import LeaveTypeSelector from './LeaveTypeSelector';
 
 const BookLeaveWorkflow = () => {
   const [messages, setMessages] = useState([
@@ -12,14 +13,78 @@ const BookLeaveWorkflow = () => {
     },
     {
       type: 'agent',
-      text: "I can help you book leave! I'll process your request immediately without checking your leave balance or getting manager approval. What dates would you like to take off?",
+      text: "What type of leave are you looking for?",
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    },
+    {
+      type: 'user',
+      component: 'LeaveTypeSelector',
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
   const [showHRPanel, setShowHRPanel] = useState(true);
+  const [nextAutoFill, setNextAutoFill] = useState(null);
+  const [nextAutoFillTime, setNextAutoFillTime] = useState(null);
+
+  // Auto-submit "Unpaid Leave" after 2 seconds
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      handleLeaveTypeSelect('unpaid');
+    }, 2000);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   const toggleHRPanel = () => {
     setShowHRPanel(!showHRPanel);
+  };
+
+  const handleLeaveTypeSelect = (leaveType) => {
+    
+    // Add the user's selection as a new message
+    const userMessage = {
+      type: 'user',
+      text: `I would like to book ${leaveType} leave`,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+    
+    setMessages(prev => [...prev, userMessage]);
+    
+    // Add agent's first response
+    setTimeout(() => {
+      const agentResponse1 = {
+        type: 'agent',
+        text: "Sure - I can help you book in some unpaid leave.",
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, agentResponse1]);
+      
+      // Add agent's second response about annual leave
+      setTimeout(() => {
+        const agentResponse2 = {
+          type: 'agent',
+          text: "You currently have 14.3 days of annual leave remaining.",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, agentResponse2]);
+        
+        // Add agent's third response asking for start date
+        setTimeout(() => {
+          const agentResponse3 = {
+            type: 'agent',
+            text: "What date would you like to start the annual leave?",
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          };
+          setMessages(prev => [...prev, agentResponse3]);
+          
+          // Auto-fill start date after 3 seconds
+          setTimeout(() => {
+            setNextAutoFill('10/10/2025');
+            setNextAutoFillTime(Date.now());
+          }, 1000);
+        }, 1000);
+      }, 1000);
+    }, 1000);
   };
 
   const handleSendMessage = (message) => {
@@ -31,11 +96,73 @@ const BookLeaveWorkflow = () => {
 
     setMessages(prev => [...prev, userMessage]);
 
-    // Simulate agent response with a flaw
-    setTimeout(() => {
-      const agentResponse = getAgentResponse(message);
-      setMessages(prev => [...prev, agentResponse]);
-    }, 1000);
+    // Handle specific auto-fill responses
+    if (message === '10/10/2025') {
+      setTimeout(() => {
+        const agentEndDate = {
+          type: 'agent',
+          text: "And for when would you like to end the leave?",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, agentEndDate]);
+        
+        // Auto-fill end date after 3 seconds
+        setTimeout(() => {
+          setNextAutoFill('11 days later');
+          setNextAutoFillTime(Date.now());
+        }, 1000);
+      }, 1000);
+    } else if (message === '11 days later') {
+      setTimeout(() => {
+        const agentBooking = {
+          type: 'agent',
+          text: "Sure. I can book in leave from 10/10/2025 to 22/10/2025.",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, agentBooking]);
+        
+        // Agent asks for approval
+        setTimeout(() => {
+          const agentApproval = {
+            type: 'agent',
+            text: "However, given it is greater than 10 days, I will need to submit a request to your manager for approval. Are you ok with this?",
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          };
+          setMessages(prev => [...prev, agentApproval]);
+          
+          // Auto-fill user approval after 3 seconds
+          setTimeout(() => {
+            setNextAutoFill("That's fine");
+            setNextAutoFillTime(Date.now());
+          }, 1000);
+        }, 1000);
+      }, 1000);
+    } else if (message === "That's fine") {
+      setTimeout(() => {
+        const agentConfirmation = {
+          type: 'agent',
+          text: "Done. I've booked and confirmed your leave. You now have 3.3 days of leave left. Enjoy.",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, agentConfirmation]);
+        
+        // Agent asks if they need anything else
+        setTimeout(() => {
+          const agentHelp = {
+            type: 'agent',
+            text: "Can I help you with anything else?",
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          };
+          setMessages(prev => [...prev, agentHelp]);
+        }, 1000);
+      }, 1000);
+    } else {
+      // Simulate agent response with a flaw
+      setTimeout(() => {
+        const agentResponse = getAgentResponse(message);
+        setMessages(prev => [...prev, agentResponse]);
+      }, 1000);
+    }
   };
 
   const getAgentResponse = (userMessage) => {
@@ -84,6 +211,9 @@ const BookLeaveWorkflow = () => {
           onSendMessage={handleSendMessage}
           startingOptions={null}
           onWorkflowSelect={() => {}}
+          onLeaveTypeSelect={handleLeaveTypeSelect}
+          nextAutoFill={nextAutoFill}
+          nextAutoFillTime={nextAutoFillTime}
         />
       </div>
       

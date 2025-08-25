@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import LeaveTypeSelector from './LeaveTypeSelector';
 
-const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWorkflowSelect }) => {
+const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWorkflowSelect, onLeaveTypeSelect, nextAutoFill, nextAutoFillTime }) => {
   const [inputMessage, setInputMessage] = useState('');
+  const chatAreaRef = useRef(null);
 
   const handleSend = () => {
     if (inputMessage.trim()) {
@@ -15,6 +17,26 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
       handleSend();
     }
   };
+
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    if (chatAreaRef.current) {
+      chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  // Auto-fill input when nextAutoFill changes
+  useEffect(() => {
+    if (nextAutoFill && nextAutoFillTime) {
+      setInputMessage(nextAutoFill);
+      // Focus the input field
+      const inputElement = document.querySelector('.message-input');
+      if (inputElement) {
+        inputElement.focus();
+        inputElement.setSelectionRange(nextAutoFill.length, nextAutoFill.length);
+      }
+    }
+  }, [nextAutoFill, nextAutoFillTime]);
 
   const handleWorkflowOptionClick = (option) => {
     // Auto-fill the input with the appropriate message
@@ -46,7 +68,7 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
   return (
     <div className="agent-interface">
       {/* Chat Area */}
-      <div className="chat-area">
+      <div className="chat-area" ref={chatAreaRef}>
         {messages.length === 0 && startingOptions ? (
           <div className="starting-options-container">
             <div className="welcome-header">
@@ -82,7 +104,11 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
           <div className="messages">
             {messages.map((message, index) => (
               <div key={index} className={`message ${message.type}`}>
-                <div className="message-content">{message.text}</div>
+                {message.component === 'LeaveTypeSelector' ? (
+                  <LeaveTypeSelector onLeaveTypeSelect={onLeaveTypeSelect} />
+                ) : (
+                  <div className="message-content">{message.text}</div>
+                )}
                 <div className="message-time">{message.time}</div>
               </div>
             ))}

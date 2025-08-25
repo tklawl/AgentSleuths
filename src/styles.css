@@ -392,6 +392,71 @@ code {
   height: 16px;
 }
 
+/* Leave Type Selector Styles */
+.leave-type-selector {
+  background: #007bff !important;
+  color: white !important;
+  padding: 16px !important;
+  border-radius: 18px !important;
+  border-bottom-right-radius: 4px !important;
+  max-width: 350px;
+  width: fit-content;
+}
+
+.leave-type-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.leave-type-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.leave-type-option input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  accent-color: white;
+  cursor: pointer;
+  margin: 0;
+}
+
+.leave-type-option input[type="radio"]:checked {
+  accent-color: white;
+}
+
+.radio-label {
+  cursor: pointer;
+  user-select: none;
+}
+
+.submit-leave-type {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  float: right;
+}
+
+.submit-leave-type:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.submit-leave-type:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* HR System Styles */
 .hr-system {
   height: 100%;
