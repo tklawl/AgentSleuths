@@ -492,6 +492,38 @@ code {
   display: flex;
   flex-direction: column;
   background: #f8f9fa;
+  position: relative;
+}
+
+.hr-tooltip {
+  background: #e3f2fd;
+  border: 2px solid #2196f3;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.1);
+  z-index: 101;
+  position: relative;
+}
+
+.hr-tooltip p {
+  margin: 0;
+  color: #1976d2;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.hr-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(128, 128, 128, 0.2);
+  z-index: 100;
+  pointer-events: all;
 }
 
 .hr-header {

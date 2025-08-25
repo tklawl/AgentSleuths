@@ -138,6 +138,10 @@ const HRSystem = ({ workflowType, leaveApproved }) => {
 
   return (
     <div className="hr-system">
+      <div className="hr-tooltip">
+        <p>To support your sleuthing, see if you can find any discrepancies between the agent and HRSys!</p>
+      </div>
+      <div className="hr-overlay"></div>
       <div className="hr-header">
         <div className="hr-logo">
           <span className="logo-text">HRSys</span>

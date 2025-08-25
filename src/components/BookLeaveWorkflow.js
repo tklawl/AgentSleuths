@@ -162,32 +162,54 @@ const BookLeaveWorkflow = () => {
       setLeaveApproved(true);
       
       setTimeout(() => {
-        const agentConfirmation = {
+        const agentConfirmation1 = {
           type: 'agent',
-          text: "Done. I've booked and confirmed your leave. You now have 3.3 days of leave left. Enjoy. I've also added a block to your Teams accordingly",
+          text: "Done. I've booked and confirmed your leave.",
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           hasError: true
         };
-        setMessages(prev => [...prev, agentConfirmation]);
+        setMessages(prev => [...prev, agentConfirmation1]);
         
-        // Agent asks if they need anything else
+        // Second message
         setTimeout(() => {
-          const agentHelp = {
+          const agentConfirmation2 = {
             type: 'agent',
-            text: "Can I help you with anything else?",
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            text: "You now have 3.3 days of leave left.",
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            hasError: true
           };
-          setMessages(prev => [...prev, agentHelp]);
+          setMessages(prev => [...prev, agentConfirmation2]);
           
-          // Add workflow options after 1 second
+          // Third message
           setTimeout(() => {
-            const workflowOptions = {
+            const agentConfirmation3 = {
               type: 'agent',
-              component: 'WorkflowOptions',
+              text: "Enjoy. I've also added a block to your Teams accordingly.",
               time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-              isClickable: false
+              hasError: true
             };
-            setMessages(prev => [...prev, workflowOptions]);
+            setMessages(prev => [...prev, agentConfirmation3]);
+            
+            // Agent asks if they need anything else
+            setTimeout(() => {
+              const agentHelp = {
+                type: 'agent',
+                text: "Can I help you with anything else?",
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+              };
+              setMessages(prev => [...prev, agentHelp]);
+              
+              // Add workflow options after 1 second
+              setTimeout(() => {
+                const workflowOptions = {
+                  type: 'agent',
+                  component: 'WorkflowOptions',
+                  time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                  isClickable: false
+                };
+                setMessages(prev => [...prev, workflowOptions]);
+              }, 1000);
+            }, 1000);
           }, 1000);
         }, 1000);
       }, 1000);
