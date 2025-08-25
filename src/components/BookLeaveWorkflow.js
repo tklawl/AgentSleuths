@@ -192,8 +192,13 @@ const BookLeaveWorkflow = () => {
         }, 1000);
       }, 1000);
     } else {
-      // Simulate agent response with a flaw
+      // Default agent response for unrecognized messages
       setTimeout(() => {
+        const agentResponse = {
+          type: 'agent',
+          text: "I'm here to help with your leave request. Please use the options above to proceed.",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
         setMessages(prev => [...prev, agentResponse]);
       }, 1000);
     }
