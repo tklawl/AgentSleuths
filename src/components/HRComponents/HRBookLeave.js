@@ -59,7 +59,7 @@ const HRBookLeave = ({ leaveApproved, leaveType, leaveDates, managerApproved }) 
     <div className="hr-leave-management">
       <div className="hr-page-header">
         <h2>Leave Management</h2>
-        <div className="hr-breadcrumb">Home > Leave Management</div>
+        <div className="hr-breadcrumb">Home {'>'} Leave Management</div>
       </div>
       
       <div className="hr-content-grid">
@@ -121,7 +121,7 @@ const HRBookLeave = ({ leaveApproved, leaveType, leaveDates, managerApproved }) 
               </div>
               <div className="policy-item">
                 <span className="policy-bullet">•</span>
-                <span className="policy-text">Sick leave is unlimited with medical certificate</span>
+                <span className="policy-text">Leave requests over 10 days must be approved by a manager</span>
               </div>
               <div className="policy-item">
                 <span className="policy-bullet">•</span>

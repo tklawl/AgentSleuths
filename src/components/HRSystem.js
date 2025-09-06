@@ -13,6 +13,7 @@ const HRSystem = ({
   transferStep,
   employeeSelected,
   departmentSelected,
+  transferComplete,
   feedbackStep,
   feedbackType,
   reviewSubmitted
@@ -39,6 +40,7 @@ const HRSystem = ({
             employeeSelected={employeeSelected}
             departmentSelected={departmentSelected}
             managerApproved={managerApproved}
+            transferComplete={transferComplete}
           />
         );
       

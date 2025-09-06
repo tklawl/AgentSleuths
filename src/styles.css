@@ -222,10 +222,17 @@ code {
   margin-bottom: 12px;
 }
 
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
 .card-content h3 {
   font-size: 16px;
   color: #2c3e50;
-  margin-bottom: 6px;
+  margin: 0;
   font-weight: 600;
 }
 
@@ -234,6 +241,33 @@ code {
   color: #6c757d;
   line-height: 1.4;
   margin: 0;
+}
+
+.difficulty-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.difficulty-easy {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.difficulty-medium {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.difficulty-hard {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }
 
 /* Agent Interface Styles */
@@ -584,7 +618,7 @@ code {
   height: 80vh;
   display: flex;
   flex-direction: column;
-  pointer-events: none;
+  pointer-events: auto;
   user-select: none;
 }
 
@@ -1343,6 +1377,248 @@ code {
   background: #e9ecef;
 }
 
+/* Employee Information Card */
+.employee-info {
+  margin-bottom: 20px;
+}
+
+.employee-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.employee-avatar {
+  width: 48px;
+  height: 48px;
+  background: #007bff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.employee-details {
+  flex: 1;
+}
+
+.employee-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 4px;
+}
+
+.employee-role {
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 2px;
+}
+
+.employee-manager {
+  font-size: 13px;
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Policy Info */
+.policy-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Employee Profile Styles */
+.hr-employee-profile {
+  padding: 0;
+}
+
+.employee-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
+  border-radius: 12px;
+  border: 1px solid #e3f2fd;
+  margin-bottom: 20px;
+}
+
+.profile-avatar {
+  flex-shrink: 0;
+}
+
+.avatar-circle {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.profile-details {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 6px;
+}
+
+.profile-role {
+  font-size: 16px;
+  color: #6c757d;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.profile-department {
+  font-size: 14px;
+  color: #007bff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.employment-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.performance-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.performance-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.performance-item:last-child {
+  border-bottom: none;
+}
+
+.performance-label {
+  font-size: 14px;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.performance-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.performance-value.excellent {
+  color: #28a745;
+  background: #d4edda;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.contact-label {
+  font-size: 13px;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.contact-value {
+  font-size: 13px;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Transfer Policy Note */
+.transfer-policy-note {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  border-left: 4px solid #f39c12;
+}
+
+.policy-note-text {
+  font-size: 13px;
+  color: #856404;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Make HR system buttons and interactive elements non-interactable */
+.hr-system button,
+.hr-system input,
+.hr-system select,
+.hr-system textarea,
+.hr-system a {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Disable all hover effects in HR system */
+.hr-system * {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Re-enable scrolling for the container */
+.hr-system {
+  pointer-events: auto;
+  cursor: default;
+}
+
+.hr-content {
+  pointer-events: auto;
+  cursor: default;
+}
+
+/* Disable hover effects on all elements */
+.hr-system *:hover {
+  background-color: inherit !important;
+  color: inherit !important;
+  border-color: inherit !important;
+  box-shadow: inherit !important;
+  transform: none !important;
+}
+
 /* Policy Items */
 .policy-items {
   display: flex;
@@ -1459,7 +1735,7 @@ code {
   position: relative;
   overflow-y: auto;
   min-height: 0;
-  pointer-events: none;
+  pointer-events: auto;
   user-select: none;
 }
 
@@ -1574,7 +1850,7 @@ code {
   flex-direction: column;
   overflow-y: auto;
   min-height: 0;
-  pointer-events: none;
+  pointer-events: auto;
   user-select: none;
 }
 

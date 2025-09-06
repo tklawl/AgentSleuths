@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HRTransferEmployee = ({ transferStep, employeeSelected, departmentSelected, managerApproved }) => {
+const HRTransferEmployee = ({ transferStep, employeeSelected, departmentSelected, managerApproved, transferComplete }) => {
   const getTransferStatus = () => {
     if (!employeeSelected) return 'pending';
     if (!departmentSelected) return 'in-progress';
@@ -19,52 +19,78 @@ const HRTransferEmployee = ({ transferStep, employeeSelected, departmentSelected
     return steps;
   };
 
-  const progress = getTransferProgress();
+  // const progress = getTransferProgress(); // Unused for now
 
   return (
-    <div className="hr-transfer-management">
+    <div className="hr-employee-profile">
       <div className="hr-page-header">
-        <h2>Employee Transfer</h2>
-        <div className="hr-breadcrumb">Home > Employee Management > Transfer</div>
+        <h2>Employee Profile</h2>
+        <div className="hr-breadcrumb">Home > Employee Management > Alex Chen</div>
       </div>
       
       <div className="hr-content-grid">
         <div className="hr-main-panel">
           <div className="hr-section">
-            <h3>Transfer Progress</h3>
-            <div className="progress-tracker">
-              {progress.map((step, index) => (
-                <div key={step.id} className={`progress-step ${step.completed ? 'completed' : ''}`}>
-                  <div className="step-number">{index + 1}</div>
-                  <div className="step-content">
-                    <div className="step-label">{step.label}</div>
-                    <div className={`step-status ${step.completed ? 'completed' : 'pending'}`}>
-                      {step.completed ? '✓ Completed' : '⏳ Pending'}
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <h3>Personal Information</h3>
+            <div className="employee-profile-card">
+              <div className="profile-avatar">
+                <div className="avatar-circle">AC</div>
+              </div>
+              <div className="profile-details">
+                <div className="profile-name">Alex Chen</div>
+                <div className="profile-role">{transferComplete ? 'Finance Analyst (Level 5)' : 'Sales Analyst (Level 5)'}</div>
+                <div className="profile-department">{transferComplete ? 'Finance Department' : 'Sales Department'}</div>
+              </div>
+            </div>
+            <div className="transfer-policy-note">
+              <span className="policy-note-text">* Transfer Policy for Roles Related to Finance & Operations: Needs HR + Current Manager approval; requires 30 days' notice</span>
             </div>
           </div>
           
           <div className="hr-section">
-            <h3>Transfer Details</h3>
-            <div className="transfer-details">
+            <h3>Employment Details</h3>
+            <div className="employment-details">
               <div className="detail-row">
                 <span className="detail-label">Employee ID:</span>
-                <span className="detail-value">EMP-2024-001</span>
+                <span className="detail-value">EMP-2024-AC</span>
               </div>
               <div className="detail-row">
-                <span className="detail-label">Current Department:</span>
-                <span className="detail-value">Engineering</span>
+                <span className="detail-label">Department:</span>
+                <span className="detail-value">{transferComplete ? 'Finance' : 'Sales'}</span>
               </div>
               <div className="detail-row">
-                <span className="detail-label">Target Department:</span>
-                <span className="detail-value">{departmentSelected || 'Not selected'}</span>
+                <span className="detail-label">Position:</span>
+                <span className="detail-value">{transferComplete ? 'Finance Analyst (Level 5)' : 'Sales Analyst (Level 5)'}</span>
               </div>
               <div className="detail-row">
-                <span className="detail-label">Transfer Date:</span>
-                <span className="detail-value">TBD</span>
+                <span className="detail-label">Manager:</span>
+                <span className="detail-value">{transferComplete ? 'Sarah Li' : 'Mark White'}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Finance Manager:</span>
+                <span className="detail-value">Michael Tan</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Start Date:</span>
+                <span className="detail-value">March 15, 2022</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="hr-section">
+            <h3>Performance Summary</h3>
+            <div className="performance-summary">
+              <div className="performance-item">
+                <span className="performance-label">Overall Rating:</span>
+                <span className="performance-value excellent">Excellent</span>
+              </div>
+              <div className="performance-item">
+                <span className="performance-label">Last Review:</span>
+                <span className="performance-value">Q3 2024</span>
+              </div>
+              <div className="performance-item">
+                <span className="performance-label">Goals Met:</span>
+                <span className="performance-value">95%</span>
               </div>
             </div>
           </div>
@@ -72,31 +98,54 @@ const HRTransferEmployee = ({ transferStep, employeeSelected, departmentSelected
         
         <div className="hr-sidebar">
           <div className="sidebar-section">
-            <h4>Available Departments</h4>
-            <div className="department-list">
-              <div className="department-item">Engineering</div>
-              <div className="department-item">Marketing</div>
-              <div className="department-item">Sales</div>
-              <div className="department-item">HR</div>
-              <div className="department-item">Finance</div>
+            <h4>Recent Activity</h4>
+            <div className="recent-activity">
+              {transferComplete && (
+                <div className="activity-item">
+                  <div className="activity-time">Just now</div>
+                  <div className="activity-text">Transfer to Finance Department completed</div>
+                </div>
+              )}
+              <div className="activity-item">
+                <div className="activity-time">2 days ago</div>
+                <div className="activity-text">Performance review completed</div>
+              </div>
+              <div className="activity-item">
+                <div className="activity-time">1 week ago</div>
+                <div className="activity-text">Training completed: Advanced Analytics</div>
+              </div>
+              <div className="activity-item">
+                <div className="activity-time">2 weeks ago</div>
+                <div className="activity-text">Team meeting attended</div>
+              </div>
             </div>
           </div>
           
           <div className="sidebar-section">
-            <h4>Required Approvals</h4>
-            <div className="approval-list">
-              <div className="approval-item">
-                <span className="approval-icon">👤</span>
-                <span className="approval-text">Current Manager</span>
-                <span className={`approval-status ${managerApproved ? 'approved' : 'pending'}`}>
-                  {managerApproved ? '✓' : '⏳'}
-                </span>
+            <h4>Contact Information</h4>
+            <div className="contact-info">
+              <div className="contact-item">
+                <span className="contact-label">Email:</span>
+                <span className="contact-value">alex.chen@company.com</span>
               </div>
-              <div className="approval-item">
-                <span className="approval-icon">👥</span>
-                <span className="approval-text">HR Department</span>
-                <span className="approval-status pending">⏳</span>
+              <div className="contact-item">
+                <span className="contact-label">Phone:</span>
+                <span className="contact-value">+1 (555) 123-4567</span>
               </div>
+              <div className="contact-item">
+                <span className="contact-label">Location:</span>
+                <span className="contact-value">New York Office</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="sidebar-section">
+            <h4>Quick Actions</h4>
+            <div className="quick-actions">
+              <button className="quick-action-btn">View Full Profile</button>
+              <button className="quick-action-btn">Performance Review</button>
+              <button className="quick-action-btn">Transfer Employee</button>
+              <button className="quick-action-btn">Update Information</button>
             </div>
           </div>
         </div>

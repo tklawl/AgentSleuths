@@ -120,19 +120,22 @@ const HomePage = () => {
       id: 'book-leave',
       title: 'Book Leave',
       description: 'Request time off and manage your leave balance.',
-      icon: '📅'
+      icon: '📅',
+      difficulty: 'Easy'
     },
     {
       id: 'transfer-employee',
       title: 'Transfer Employee',
       description: 'Move employees between departments and roles.',
-      icon: '👥'
+      icon: '👥',
+      difficulty: 'Medium'
     },
     {
       id: 'provide-feedback',
       title: 'Provide Employee Feedback',
       description: 'Submit performance reviews and feedback.',
-      icon: '💬'
+      icon: '💬',
+      difficulty: 'Hard'
     }
   ];
 

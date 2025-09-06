@@ -13,6 +13,7 @@ const WorkflowContainer = ({
   nextAutoFillTime,
   workflowType,
   leaveApproved,
+  transferComplete,
   backTo = "/",
   isThinking = false
 }) => {
@@ -36,7 +37,7 @@ const WorkflowContainer = ({
       </div>
       
       <div className="hr-side">
-        <HRSystem workflowType={workflowType} leaveApproved={leaveApproved} />
+        <HRSystem workflowType={workflowType} leaveApproved={leaveApproved} transferComplete={transferComplete} />
       </div>
     </div>
   );

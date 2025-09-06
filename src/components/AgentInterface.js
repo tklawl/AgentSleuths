@@ -101,7 +101,12 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
                 >
                   <div className="card-icon">{option.icon}</div>
                   <div className="card-content">
-                    <h3>{option.title}</h3>
+                    <div className="card-header">
+                      <h3>{option.title}</h3>
+                      <span className={`difficulty-badge difficulty-${option.difficulty?.toLowerCase()}`}>
+                        {option.difficulty}
+                      </span>
+                    </div>
                     <p>{option.description}</p>
                   </div>
                 </div>
