@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import AgentInterface from './AgentInterface';
-import HRSystem from './HRSystem';
-import { useGame } from '../context/GameContext';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import WorkflowContainer from './WorkflowContainer';
+import { useMessageClick } from '../hooks/useMessageClick';
+import { useTimer } from '../context/TimerContext';
 
 const BookLeaveWorkflow = () => {
   const navigate = useNavigate();
@@ -14,26 +14,34 @@ const BookLeaveWorkflow = () => {
     },
     {
       type: 'agent',
-      text: "What type of leave are you looking for?",
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    },
-    {
-      type: 'user',
-      component: 'LeaveTypeSelector',
+      text: "What type of leave are you looking for? The options available are:\n- Annual Leave\n- Parental Leave\n- Long Service Leave\n- Sick Leave\n- Unpaid Leave",
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
-  const [showHRPanel, setShowHRPanel] = useState(true);
   const [nextAutoFill, setNextAutoFill] = useState(null);
   const [nextAutoFillTime, setNextAutoFillTime] = useState(null);
   const [leaveApproved, setLeaveApproved] = useState(false);
-  const { addScore, loseLife } = useGame();
+  const { handleMessageClick } = useMessageClick(setMessages);
+  const { startTimer, isRunning } = useTimer();
+
+  // Start timer when component mounts if not already running
+  useEffect(() => {
+    if (!isRunning) {
+      startTimer();
+    }
+  }, [isRunning, startTimer]);
+
+  // Auto-fill "Annual Leave" after agent asks about leave type
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setNextAutoFill('Annual Leave');
+      setNextAutoFillTime(Date.now());
+    }, 2000); // Wait 2 seconds after the agent message
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Remove auto-submission - wait for user to click submit
-
-  const toggleHRPanel = () => {
-    setShowHRPanel(!showHRPanel);
-  };
 
   const handleWorkflowSelect = (workflowId) => {
     switch (workflowId) {
@@ -48,21 +56,6 @@ const BookLeaveWorkflow = () => {
     }
   };
 
-  const handleMessageClick = (index, message) => {
-    // Remove the isClickable flag from this message
-    setMessages(prev => prev.map((msg, i) => 
-      i === index ? { ...msg, isClickable: false } : msg
-    ));
-
-    // Check if the message has an error flag
-    if (message.hasError) {
-      // Correct! User found an error
-      addScore();
-    } else {
-      // Incorrect! User clicked on a non-error message
-      loseLife();
-    }
-  };
 
   const handleLeaveTypeSelect = (leaveType) => {
     
@@ -113,6 +106,12 @@ const BookLeaveWorkflow = () => {
 
     setMessages(prev => [...prev, userMessage]);
 
+    // Handle leave type selection
+    if (message.toLowerCase().includes('annual leave') || message.toLowerCase().includes('annual')) {
+      handleLeaveTypeSelect('annual');
+      return;
+    }
+
     // Handle specific auto-fill responses
     if (message === '10/10/2025') {
       setTimeout(() => {
@@ -135,7 +134,7 @@ const BookLeaveWorkflow = () => {
           type: 'agent',
           text: "Sure. I can book in leave from 10/10/2025 to 22/10/2025.",
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          hasError: true
+          hasDoubleError: true
         };
         setMessages(prev => [...prev, agentBooking]);
         
@@ -217,7 +216,7 @@ const BookLeaveWorkflow = () => {
       setTimeout(() => {
         const agentResponse = {
           type: 'agent',
-          text: "I'm here to help with your leave request. Please use the options above to proceed.",
+          text: "I'm here to help with your leave request. Please select one of the available leave types: Annual Leave, Parental Leave, Long Service Leave, Sick Leave, or Unpaid Leave.",
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
         setMessages(prev => [...prev, agentResponse]);
@@ -226,33 +225,18 @@ const BookLeaveWorkflow = () => {
   };
 
   return (
-    <div className={`workflow-container ${!showHRPanel ? 'hr-panel-hidden' : ''}`}>
-      <Link to="/" className="back-icon">
-        ←
-      </Link>
-      <div className="agent-side">
-        <AgentInterface 
-          title="Leave Booking Agent"
-          messages={messages}
-          onSendMessage={handleSendMessage}
-          startingOptions={null}
-          onWorkflowSelect={handleWorkflowSelect}
-          onLeaveTypeSelect={handleLeaveTypeSelect}
-          nextAutoFill={nextAutoFill}
-          nextAutoFillTime={nextAutoFillTime}
-          onMessageClick={handleMessageClick}
-        />
-      </div>
-      
-      <div className="hr-side">
-        <HRSystem workflowType="book-leave" leaveApproved={leaveApproved} />
-      </div>
-      
-      <button className="toggle-hr-panel" onClick={toggleHRPanel}>
-        {showHRPanel ? '◀' : '▶'}
-      </button>
-      
-    </div>
+    <WorkflowContainer
+      title="Leave Booking Agent"
+      messages={messages}
+      onSendMessage={handleSendMessage}
+      onMessageClick={handleMessageClick}
+      onWorkflowSelect={handleWorkflowSelect}
+      nextAutoFill={nextAutoFill}
+      nextAutoFillTime={nextAutoFillTime}
+      workflowType="book-leave"
+      leaveApproved={leaveApproved}
+      backTo="/"
+    />
   );
 };
 

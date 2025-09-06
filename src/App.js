@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import BookLeaveWorkflow from './components/BookLeaveWorkflow';
@@ -7,24 +7,21 @@ import ProvideFeedbackWorkflow from './components/ProvideFeedbackWorkflow';
 import GameTracker from './components/GameTracker';
 import GameOverModal from './components/GameOverModal';
 import FloatingEmoji from './components/FloatingEmoji';
+import Timer from './components/Timer';
 import { GameProvider, useGame } from './context/GameContext';
+import { TimerProvider, useTimer } from './context/TimerContext';
 
 const AppContent = () => {
-  let score = 0, lives = 3, gameOver = false, floatingEmoji = null, setFloatingEmoji = () => {};
+  const { score, lives, gameOver, floatingEmoji, setFloatingEmoji, setGameOver } = useGame();
+  const { isWarning } = useTimer();
   
-  try {
-    const gameContext = useGame();
-    score = gameContext.score;
-    lives = gameContext.lives;
-    gameOver = gameContext.gameOver;
-    floatingEmoji = gameContext.floatingEmoji;
-    setFloatingEmoji = gameContext.setFloatingEmoji;
-  } catch (error) {
-    console.error('Game context error in AppContent:', error);
-  }
-
+  const handleEmojiComplete = useCallback(() => {
+    setFloatingEmoji(null);
+  }, [setFloatingEmoji]);
+  
   return (
     <div className="App">
+      <Timer />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/book-leave" element={<BookLeaveWorkflow />} />
@@ -33,11 +30,12 @@ const AppContent = () => {
       </Routes>
       <GameTracker score={score} lives={lives} />
       <GameOverModal isVisible={gameOver} finalScore={score} />
+      {isWarning && <div className="warning-overlay" />}
       {floatingEmoji && (
-        <FloatingEmoji
+        <FloatingEmoji 
           emoji={floatingEmoji.emoji}
           message={floatingEmoji.message}
-          onComplete={() => setFloatingEmoji(null)}
+          onComplete={handleEmojiComplete}
         />
       )}
     </div>
@@ -47,11 +45,21 @@ const AppContent = () => {
 function App() {
   return (
     <GameProvider>
-      <Router basename="/AgentSleuths">
-        <AppContent />
-      </Router>
+      <AppWithTimer />
     </GameProvider>
   );
 }
+
+const AppWithTimer = () => {
+  const { setGameOver } = useGame();
+  
+  return (
+    <TimerProvider onTimeUp={() => setGameOver(true)}>
+      <Router basename="/AgentSleuths">
+        <AppContent />
+      </Router>
+    </TimerProvider>
+  );
+};
 
 export default App;

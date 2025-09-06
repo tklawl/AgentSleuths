@@ -1,8 +1,10 @@
 import React from 'react';
 import { useGame } from '../context/GameContext';
+import { useTimer } from '../context/TimerContext';
 
 const GameOverModal = ({ isVisible, finalScore }) => {
   const { resetGame } = useGame();
+  const { resetTimer } = useTimer();
 
   if (!isVisible) return null;
 
@@ -24,7 +26,7 @@ const GameOverModal = ({ isVisible, finalScore }) => {
             <h4>Game Summary</h4>
             <ul>
               <li>✅ Correct clicks: {finalScore}</li>
-              <li>❌ Incorrect clicks: {3 - finalScore} (led to game over)</li>
+              <li>❌ Incorrect clicks: {3 - finalScore}</li>
               <li>🎯 Accuracy: {Math.round((finalScore / 3) * 100)}%</li>
             </ul>
           </div>
@@ -33,7 +35,10 @@ const GameOverModal = ({ isVisible, finalScore }) => {
         <div className="modal-footer">
           <button 
             className="play-again-btn"
-            onClick={resetGame}
+            onClick={() => {
+              resetGame();
+              resetTimer();
+            }}
           >
             Play Again
           </button>

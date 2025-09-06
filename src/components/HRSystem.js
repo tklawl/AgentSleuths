@@ -137,12 +137,24 @@ const HRSystem = ({ workflowType, leaveApproved }) => {
   const content = getWorkflowContent();
 
   return (
-    <div className="hr-system">
-      <div className="hr-tooltip">
-        <p>To support your sleuthing, see if you can find any discrepancies between the agent and HRSys!</p>
-      </div>
-      <div className="hr-overlay"></div>
-      <div className="hr-header">
+    <div className="hr-system-wrapper">
+      <div className="chrome-browser-container">
+        <div className="chrome-header">
+          <div className="chrome-controls">
+            <div className="chrome-button close"></div>
+            <div className="chrome-button minimize"></div>
+            <div className="chrome-button maximize"></div>
+          </div>
+          <div className="chrome-address-bar">
+            <div className="chrome-address-icon">🔒</div>
+            <div className="chrome-url">hrsys.company.com</div>
+          </div>
+          <div className="chrome-menu">
+            <div className="chrome-menu-button">⋮</div>
+          </div>
+        </div>
+        <div className="hr-system">
+        <div className="hr-header">
         <div className="hr-logo">
           <span className="logo-text">HRSys</span>
         </div>
@@ -220,6 +232,11 @@ const HRSystem = ({ workflowType, leaveApproved }) => {
             ))}
           </div>
         )}
+      </div>
+      </div>
+      </div>
+      <div className="hr-hint">
+        <p>Hint: Read and watch the HR System as you interact with the HRAssist. It updates! There's no need to interact with it though.</p>
       </div>
     </div>
   );

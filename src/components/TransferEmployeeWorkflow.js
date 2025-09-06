@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import AgentInterface from './AgentInterface';
-import HRSystem from './HRSystem';
-import { useGame } from '../context/GameContext';
+import React, { useState, useEffect } from 'react';
+import WorkflowContainer from './WorkflowContainer';
+import { useMessageClick } from '../hooks/useMessageClick';
+import { useTimer } from '../context/TimerContext';
 
 const TransferEmployeeWorkflow = () => {
   const [messages, setMessages] = useState([
@@ -14,31 +13,20 @@ const TransferEmployeeWorkflow = () => {
     {
       type: 'agent',
       text: "I can help you transfer an employee! I'll process the transfer immediately without checking if the employee exists or getting any approvals. Which employee do you want to transfer?",
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      hasDoubleError: true
     }
   ]);
-  const [showHRPanel, setShowHRPanel] = useState(true);
-  const { addScore, loseLife } = useGame();
+  const { handleMessageClick } = useMessageClick(setMessages);
+  const { startTimer, isRunning } = useTimer();
 
-  const toggleHRPanel = () => {
-    setShowHRPanel(!showHRPanel);
-  };
-
-  const handleMessageClick = (index, message) => {
-    // Remove the isClickable flag from this message
-    setMessages(prev => prev.map((msg, i) => 
-      i === index ? { ...msg, isClickable: false } : msg
-    ));
-
-    // Check if the message has an error flag
-    if (message.hasError) {
-      // Correct! User found an error
-      addScore();
-    } else {
-      // Incorrect! User clicked on a non-error message
-      loseLife();
+  // Start timer when component mounts if not already running
+  useEffect(() => {
+    if (!isRunning) {
+      startTimer();
     }
-  };
+  }, [isRunning, startTimer]);
+
 
   const handleSendMessage = (message) => {
     const userMessage = {
@@ -71,7 +59,8 @@ const TransferEmployeeWorkflow = () => {
       return {
         type: 'agent',
         text: "Perfect! I've transferred that employee to the new department. I didn't need to verify their current position or check if the new department exists. The transfer is complete!",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        hasError: true
       };
     }
     
@@ -99,29 +88,18 @@ const TransferEmployeeWorkflow = () => {
   };
 
   return (
-    <div className={`workflow-container ${!showHRPanel ? 'hr-panel-hidden' : ''}`}>
-      <Link to="/" className="back-icon">
-        ←
-      </Link>
-      <div className="agent-side">
-        <AgentInterface 
-          title="Employee Transfer Agent"
-          messages={messages}
-          onSendMessage={handleSendMessage}
-          startingOptions={null}
-          onWorkflowSelect={() => {}}
-          onMessageClick={handleMessageClick}
-        />
-      </div>
-      
-      <div className="hr-side">
-        <HRSystem workflowType="transfer-employee" />
-      </div>
-      
-      <button className="toggle-hr-panel" onClick={toggleHRPanel}>
-        {showHRPanel ? '◀' : '▶'}
-      </button>
-    </div>
+    <WorkflowContainer
+      title="Employee Transfer Agent"
+      messages={messages}
+      onSendMessage={handleSendMessage}
+      onMessageClick={handleMessageClick}
+      onWorkflowSelect={() => {}}
+      nextAutoFill={null}
+      nextAutoFillTime={null}
+      workflowType="transfer-employee"
+      leaveApproved={false}
+      backTo="/"
+    />
   );
 };
 

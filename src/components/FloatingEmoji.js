@@ -1,18 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const FloatingEmoji = ({ emoji, message, onComplete }) => {
   const [isVisible, setIsVisible] = useState(true);
+  const onCompleteRef = useRef(onComplete);
+
+  // Update the ref when onComplete changes
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Main timer - hide after 2 seconds
+    const hideTimer = setTimeout(() => {
       setIsVisible(false);
-      setTimeout(() => {
-        onComplete();
-      }, 300); // Wait for fade out animation
     }, 2000);
 
-    return () => clearTimeout(timer);
-  }, [onComplete]);
+    // Complete timer - call onComplete after fade out
+    const completeTimer = setTimeout(() => {
+      if (onCompleteRef.current) {
+        onCompleteRef.current();
+      }
+    }, 2300); // 2000 + 300 for fade out
+
+    // Safety timer - force complete after 5 seconds
+    const safetyTimer = setTimeout(() => {
+      if (onCompleteRef.current) {
+        onCompleteRef.current();
+      }
+    }, 5000);
+
+    return () => {
+      clearTimeout(hideTimer);
+      clearTimeout(completeTimer);
+      clearTimeout(safetyTimer);
+    };
+  }, []); // Empty dependency array - only run once
 
   return (
     <div className={`floating-emoji ${isVisible ? 'visible' : 'fade-out'}`}>

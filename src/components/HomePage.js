@@ -2,25 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AgentInterface from './AgentInterface';
 import HRSystem from './HRSystem';
-import { useGame } from '../context/GameContext';
+import { useMessageClick } from '../hooks/useMessageClick';
+import { useTimer } from '../context/TimerContext';
 
 const HomePage = () => {
   const [messages, setMessages] = useState([]);
 
-  const [showHRPanel, setShowHRPanel] = useState(false);
   const navigate = useNavigate();
-  
-  // Add error handling for useGame
-  let addScore, loseLife;
-  try {
-    const gameContext = useGame();
-    addScore = gameContext.addScore;
-    loseLife = gameContext.loseLife;
-  } catch (error) {
-    console.error('Game context error:', error);
-    addScore = () => {};
-    loseLife = () => {};
-  }
+  const { handleMessageClick } = useMessageClick(setMessages);
+  const { startTimer, isRunning } = useTimer();
 
   const handleSendMessage = (message) => {
     if (!message || !message.trim()) return;
@@ -110,28 +100,14 @@ const HomePage = () => {
 
   const handleWorkflowSelect = (workflow) => {
     console.log('Workflow selected:', workflow);
+    // Start timer when user selects a workflow
+    if (!isRunning) {
+      startTimer();
+    }
     navigate(`/${workflow}`);
   };
 
-  const toggleHRPanel = () => {
-    setShowHRPanel(!showHRPanel);
-  };
 
-  const handleMessageClick = (index, message) => {
-    // Remove the isClickable flag from this message
-    setMessages(prev => prev.map((msg, i) => 
-      i === index ? { ...msg, isClickable: false } : msg
-    ));
-
-    // Check if the message has an error flag
-    if (message.hasError) {
-      // Correct! User found an error
-      addScore();
-    } else {
-      // Incorrect! User clicked on a non-error message
-      loseLife();
-    }
-  };
 
   const startingOptions = [
     {
@@ -155,7 +131,7 @@ const HomePage = () => {
   ];
 
   return (
-    <div className={`workflow-container ${!showHRPanel ? 'hr-panel-hidden' : ''}`}>
+    <div className="workflow-container">
       <div className="agent-side">
         <AgentInterface 
           title="HR Assistant"
@@ -170,10 +146,6 @@ const HomePage = () => {
       <div className="hr-side">
         <HRSystem workflowType="overview" />
       </div>
-      
-      <button className="toggle-hr-panel" onClick={toggleHRPanel}>
-        {showHRPanel ? '◀' : '▶'}
-      </button>
     </div>
   );
 };

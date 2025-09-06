@@ -16,11 +16,11 @@ export const GameProvider = ({ children }) => {
   const [gameOver, setGameOver] = useState(false);
   const [floatingEmoji, setFloatingEmoji] = useState(null);
 
-  const addScore = () => {
+  const addScore = (isDoubleError = false) => {
     setScore(prev => prev + 1);
     setFloatingEmoji({
       emoji: '✅',
-      message: 'Correct! +1 point'
+      message: isDoubleError ? 'Double error found! +1 point' : 'Correct! +1 point'
     });
   };
 
@@ -54,7 +54,8 @@ export const GameProvider = ({ children }) => {
     addScore,
     loseLife,
     resetGame,
-    setFloatingEmoji
+    setFloatingEmoji,
+    setGameOver
   };
 
   return (

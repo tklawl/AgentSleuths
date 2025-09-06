@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import LeaveTypeSelector from './LeaveTypeSelector';
-import WorkflowOptions from './WorkflowOptions';
+import MessageList from './MessageList';
 
-const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWorkflowSelect, onLeaveTypeSelect, nextAutoFill, nextAutoFillTime, onMessageClick }) => {
+const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWorkflowSelect, nextAutoFill, nextAutoFillTime, onMessageClick }) => {
   const [inputMessage, setInputMessage] = useState('');
   const chatAreaRef = useRef(null);
 
@@ -19,12 +18,16 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
     }
   };
 
-  // Auto-scroll to bottom when messages change
+  // Auto-scroll to bottom when new messages are added (not when existing messages are modified)
+  const prevMessageCountRef = useRef(0);
+  
   useEffect(() => {
-    if (chatAreaRef.current) {
+    if (chatAreaRef.current && messages.length > prevMessageCountRef.current) {
+      // Only scroll if the message count increased (new message added)
       chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
+      prevMessageCountRef.current = messages.length;
     }
-  }, [messages]);
+  }, [messages.length]);
 
   // Auto-fill input when nextAutoFill changes
   useEffect(() => {
@@ -38,6 +41,20 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
       }
     }
   }, [nextAutoFill, nextAutoFillTime]);
+
+  // Global Enter key handler to ensure it always works
+  useEffect(() => {
+    const handleGlobalKeyPress = (e) => {
+      if (e.key === 'Enter' && inputMessage.trim()) {
+        handleSend();
+      }
+    };
+
+    document.addEventListener('keydown', handleGlobalKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleGlobalKeyPress);
+    };
+  }, [inputMessage]);
 
   const handleWorkflowOptionClick = (option) => {
     // Auto-fill the input with the appropriate message
@@ -102,24 +119,11 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
             </div>
           </div>
         ) : (
-          <div className="messages">
-            {messages.map((message, index) => (
-              <div 
-                key={index} 
-                className={`message ${message.type} ${message.type === 'agent' && message.isClickable !== false && !message.component ? 'clickable' : ''}`}
-                onClick={() => message.type === 'agent' && message.isClickable !== false && !message.component && onMessageClick ? onMessageClick(index, message) : null}
-              >
-                {message.component === 'LeaveTypeSelector' ? (
-                  <LeaveTypeSelector onLeaveTypeSelect={onLeaveTypeSelect} />
-                ) : message.component === 'WorkflowOptions' ? (
-                  <WorkflowOptions onWorkflowSelect={onWorkflowSelect} />
-                ) : (
-                  <div className="message-content">{message.text}</div>
-                )}
-                <div className="message-time">{message.time}</div>
-              </div>
-            ))}
-          </div>
+          <MessageList
+            messages={messages}
+            onMessageClick={onMessageClick}
+            onWorkflowSelect={onWorkflowSelect}
+          />
         )}
       </div>
 

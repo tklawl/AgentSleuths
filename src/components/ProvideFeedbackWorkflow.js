@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import AgentInterface from './AgentInterface';
-import HRSystem from './HRSystem';
-import { useGame } from '../context/GameContext';
+import React, { useState, useEffect } from 'react';
+import WorkflowContainer from './WorkflowContainer';
+import { useMessageClick } from '../hooks/useMessageClick';
+import { useTimer } from '../context/TimerContext';
 
 const ProvideFeedbackWorkflow = () => {
   const [messages, setMessages] = useState([
@@ -14,31 +13,20 @@ const ProvideFeedbackWorkflow = () => {
     {
       type: 'agent',
       text: "I can help you provide employee feedback! I'll submit the feedback immediately without checking if the employee exists or getting any approvals. Which employee do you want to give feedback to?",
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      hasError: true
     }
   ]);
-  const [showHRPanel, setShowHRPanel] = useState(true);
-  const { addScore, loseLife } = useGame();
+  const { handleMessageClick } = useMessageClick(setMessages);
+  const { startTimer, isRunning } = useTimer();
 
-  const toggleHRPanel = () => {
-    setShowHRPanel(!showHRPanel);
-  };
-
-  const handleMessageClick = (index, message) => {
-    // Remove the isClickable flag from this message
-    setMessages(prev => prev.map((msg, i) => 
-      i === index ? { ...msg, isClickable: false } : msg
-    ));
-
-    // Check if the message has an error flag
-    if (message.hasError) {
-      // Correct! User found an error
-      addScore();
-    } else {
-      // Incorrect! User clicked on a non-error message
-      loseLife();
+  // Start timer when component mounts if not already running
+  useEffect(() => {
+    if (!isRunning) {
+      startTimer();
     }
-  };
+  }, [isRunning, startTimer]);
+
 
   const handleSendMessage = (message) => {
     const userMessage = {
@@ -71,7 +59,8 @@ const ProvideFeedbackWorkflow = () => {
       return {
         type: 'agent',
         text: "Great! I've submitted the feedback for that employee. I didn't need to verify if they work for the company or if you have authority to give them feedback. The feedback is now in their record!",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        hasDoubleError: true
       };
     }
     
@@ -107,29 +96,18 @@ const ProvideFeedbackWorkflow = () => {
   };
 
   return (
-    <div className={`workflow-container ${!showHRPanel ? 'hr-panel-hidden' : ''}`}>
-      <Link to="/" className="back-icon">
-        ←
-      </Link>
-      <div className="agent-side">
-        <AgentInterface 
-          title="Feedback Agent"
-          messages={messages}
-          onSendMessage={handleSendMessage}
-          startingOptions={null}
-          onWorkflowSelect={() => {}}
-          onMessageClick={handleMessageClick}
-        />
-      </div>
-      
-      <div className="hr-side">
-        <HRSystem workflowType="provide-feedback" />
-      </div>
-      
-      <button className="toggle-hr-panel" onClick={toggleHRPanel}>
-        {showHRPanel ? '◀' : '▶'}
-      </button>
-    </div>
+    <WorkflowContainer
+      title="Feedback Agent"
+      messages={messages}
+      onSendMessage={handleSendMessage}
+      onMessageClick={handleMessageClick}
+      onWorkflowSelect={() => {}}
+      nextAutoFill={null}
+      nextAutoFillTime={null}
+      workflowType="provide-feedback"
+      leaveApproved={false}
+      backTo="/"
+    />
   );
 };
 
