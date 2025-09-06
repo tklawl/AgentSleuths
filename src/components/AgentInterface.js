@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import MessageList from './MessageList';
 
-const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWorkflowSelect, nextAutoFill, nextAutoFillTime, onMessageClick }) => {
+const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWorkflowSelect, nextAutoFill, nextAutoFillTime, onMessageClick, isThinking = false }) => {
   const [inputMessage, setInputMessage] = useState('');
   const chatAreaRef = useRef(null);
 
@@ -123,13 +123,14 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
             messages={messages}
             onMessageClick={onMessageClick}
             onWorkflowSelect={onWorkflowSelect}
+            isThinking={isThinking}
           />
         )}
       </div>
 
       {/* Input Area */}
       <div className="input-area">
-        <div className="input-container">
+        <div className={`input-container ${inputMessage.trim() ? 'has-text' : ''}`}>
           <input
             type="text"
             value={inputMessage}
@@ -139,7 +140,7 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
             className="message-input"
             readOnly
           />
-          <button onClick={handleSend} className="send-button">
+          <button onClick={handleSend} className={`send-button ${inputMessage.trim() ? 'has-text' : ''}`}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
             </svg>

@@ -4,6 +4,7 @@ import AgentInterface from './AgentInterface';
 import HRSystem from './HRSystem';
 import { useMessageClick } from '../hooks/useMessageClick';
 import { useTimer } from '../context/TimerContext';
+import useThinking from '../hooks/useThinking';
 
 const HomePage = () => {
   const [messages, setMessages] = useState([]);
@@ -11,8 +12,9 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { handleMessageClick } = useMessageClick(setMessages);
   const { startTimer, isRunning } = useTimer();
+  const { isThinking, withThinking } = useThinking();
 
-  const handleSendMessage = (message) => {
+  const handleSendMessage = async (message) => {
     if (!message || !message.trim()) return;
     
     const userMessage = {
@@ -26,27 +28,31 @@ const HomePage = () => {
     // Check if this is a workflow selection message
     const lowerMessage = message.toLowerCase();
     if (lowerMessage.includes('book leave')) {
-      setTimeout(() => {
+      await withThinking(async () => {
+        await new Promise(resolve => setTimeout(resolve, 500));
         navigate('/book-leave');
-      }, 500);
+      });
       return;
     } else if (lowerMessage.includes('transfer an employee')) {
-      setTimeout(() => {
+      await withThinking(async () => {
+        await new Promise(resolve => setTimeout(resolve, 500));
         navigate('/transfer-employee');
-      }, 500);
+      });
       return;
     } else if (lowerMessage.includes('provide employee feedback')) {
-      setTimeout(() => {
+      await withThinking(async () => {
+        await new Promise(resolve => setTimeout(resolve, 500));
         navigate('/provide-feedback');
-      }, 500);
+      });
       return;
     }
 
-    // Simulate agent response
-    setTimeout(() => {
+    // Simulate agent response with thinking
+    await withThinking(async () => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
       const agentResponse = getAgentResponse(message);
       setMessages(prev => [...prev, agentResponse]);
-    }, 1000);
+    });
   };
 
   const getAgentResponse = (userMessage) => {
@@ -140,6 +146,7 @@ const HomePage = () => {
           startingOptions={startingOptions}
           onWorkflowSelect={handleWorkflowSelect}
           onMessageClick={handleMessageClick}
+          isThinking={isThinking}
         />
       </div>
       

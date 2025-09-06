@@ -1,10 +1,12 @@
 import React from 'react';
 import AgentMessage from './AgentMessage';
+import ThinkingIndicator from './ThinkingIndicator';
 
 const MessageList = ({ 
   messages, 
   onMessageClick, 
-  onWorkflowSelect 
+  onWorkflowSelect,
+  isThinking = false
 }) => {
   return (
     <div className="messages">
@@ -17,6 +19,7 @@ const MessageList = ({
           onWorkflowSelect={onWorkflowSelect}
         />
       ))}
+      <ThinkingIndicator isVisible={isThinking} />
     </div>
   );
 };

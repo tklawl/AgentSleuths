@@ -13,7 +13,8 @@ const WorkflowContainer = ({
   nextAutoFillTime,
   workflowType,
   leaveApproved,
-  backTo = "/"
+  backTo = "/",
+  isThinking = false
 }) => {
   return (
     <div className="workflow-container">
@@ -30,6 +31,7 @@ const WorkflowContainer = ({
           nextAutoFill={nextAutoFill}
           nextAutoFillTime={nextAutoFillTime}
           onMessageClick={onMessageClick}
+          isThinking={isThinking}
         />
       </div>
       

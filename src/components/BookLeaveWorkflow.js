@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import WorkflowContainer from './WorkflowContainer';
 import { useMessageClick } from '../hooks/useMessageClick';
 import { useTimer } from '../context/TimerContext';
+import useThinking from '../hooks/useThinking';
 
 const BookLeaveWorkflow = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const BookLeaveWorkflow = () => {
   const [leaveApproved, setLeaveApproved] = useState(false);
   const { handleMessageClick } = useMessageClick(setMessages);
   const { startTimer, isRunning } = useTimer();
+  const { isThinking, withThinking } = useThinking();
 
   // Start timer when component mounts if not already running
   useEffect(() => {
@@ -33,12 +35,8 @@ const BookLeaveWorkflow = () => {
 
   // Auto-fill "Annual Leave" after agent asks about leave type
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setNextAutoFill('Annual Leave');
-      setNextAutoFillTime(Date.now());
-    }, 2000); // Wait 2 seconds after the agent message
-
-    return () => clearTimeout(timer);
+    setNextAutoFill('Annual Leave');
+    setNextAutoFillTime(Date.now());
   }, []);
 
   // Remove auto-submission - wait for user to click submit
@@ -82,7 +80,7 @@ const BookLeaveWorkflow = () => {
         setTimeout(() => {
           const agentResponse3 = {
             type: 'agent',
-            text: "What date would you like to start the annual leave?",
+            text: "What date would you like to start the leave?",
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           };
           setMessages(prev => [...prev, agentResponse3]);
@@ -129,12 +127,13 @@ const BookLeaveWorkflow = () => {
         }, 1000);
       }, 1000);
     } else if (message === '11 days later') {
-      setTimeout(() => {
+      withThinking(async () => {
+        await new Promise(resolve => setTimeout(resolve, 1000));
         const agentBooking = {
           type: 'agent',
           text: "Sure. I can book in leave from 10/10/2025 to 22/10/2025.",
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          hasDoubleError: true
+          hasError: true
         };
         setMessages(prev => [...prev, agentBooking]);
         
@@ -143,8 +142,7 @@ const BookLeaveWorkflow = () => {
           const agentApproval = {
             type: 'agent',
             text: "However, given it is greater than 10 days, I will need to submit a request to your manager for approval. Are you ok with this?",
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            hasError: true
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           };
           setMessages(prev => [...prev, agentApproval]);
           
@@ -154,12 +152,13 @@ const BookLeaveWorkflow = () => {
             setNextAutoFillTime(Date.now());
           }, 1000);
         }, 1000);
-      }, 1000);
+      });
     } else if (message === "That's fine") {
       // Update the leave approval state
       setLeaveApproved(true);
       
-      setTimeout(() => {
+      withThinking(async () => {
+        await new Promise(resolve => setTimeout(resolve, 1000));
         const agentConfirmation1 = {
           type: 'agent',
           text: "Done. I've booked and confirmed your leave.",
@@ -173,8 +172,7 @@ const BookLeaveWorkflow = () => {
           const agentConfirmation2 = {
             type: 'agent',
             text: "You now have 3.3 days of leave left.",
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            hasError: true
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           };
           setMessages(prev => [...prev, agentConfirmation2]);
           
@@ -182,7 +180,7 @@ const BookLeaveWorkflow = () => {
           setTimeout(() => {
             const agentConfirmation3 = {
               type: 'agent',
-              text: "Enjoy. I've also added a block to your Teams accordingly.",
+              text: "Enjoy the leave, Jenny Smith.",
               time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
               hasError: true
             };
@@ -210,7 +208,7 @@ const BookLeaveWorkflow = () => {
             }, 1000);
           }, 1000);
         }, 1000);
-      }, 1000);
+      });
     } else {
       // Default agent response for unrecognized messages
       setTimeout(() => {
@@ -236,6 +234,7 @@ const BookLeaveWorkflow = () => {
       workflowType="book-leave"
       leaveApproved={leaveApproved}
       backTo="/"
+      isThinking={isThinking}
     />
   );
 };

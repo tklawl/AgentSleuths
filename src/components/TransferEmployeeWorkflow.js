@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import WorkflowContainer from './WorkflowContainer';
 import { useMessageClick } from '../hooks/useMessageClick';
 import { useTimer } from '../context/TimerContext';
+import useThinking from '../hooks/useThinking';
 
 const TransferEmployeeWorkflow = () => {
   const [messages, setMessages] = useState([
@@ -19,6 +20,7 @@ const TransferEmployeeWorkflow = () => {
   ]);
   const { handleMessageClick } = useMessageClick(setMessages);
   const { startTimer, isRunning } = useTimer();
+  const { isThinking, withThinking } = useThinking();
 
   // Start timer when component mounts if not already running
   useEffect(() => {
@@ -99,6 +101,7 @@ const TransferEmployeeWorkflow = () => {
       workflowType="transfer-employee"
       leaveApproved={false}
       backTo="/"
+      isThinking={isThinking}
     />
   );
 };
