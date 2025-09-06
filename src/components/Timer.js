@@ -2,7 +2,7 @@ import React from 'react';
 import { useTimer } from '../context/TimerContext';
 
 const Timer = () => {
-  const { timeLeft, isRunning, isWarning, hasStarted, formatTime, addTime } = useTimer();
+  const { timeLeft, isWarning, hasStarted, formatTime, addTime } = useTimer();
 
   if (!hasStarted) {
     return null;

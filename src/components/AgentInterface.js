@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import MessageList from './MessageList';
 
 const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWorkflowSelect, nextAutoFill, nextAutoFillTime, onMessageClick, isThinking = false }) => {
   const [inputMessage, setInputMessage] = useState('');
   const chatAreaRef = useRef(null);
 
-  const handleSend = () => {
+  const handleSend = useCallback(() => {
     if (inputMessage.trim()) {
       onSendMessage(inputMessage);
       setInputMessage('');
     }
-  };
+  }, [inputMessage, onSendMessage]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -54,7 +54,7 @@ const AgentInterface = ({ title, messages, onSendMessage, startingOptions, onWor
     return () => {
       document.removeEventListener('keydown', handleGlobalKeyPress);
     };
-  }, [inputMessage]);
+  }, [inputMessage, handleSend]);
 
   const handleWorkflowOptionClick = (option) => {
     // Auto-fill the input with the appropriate message

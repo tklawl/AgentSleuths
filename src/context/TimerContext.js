@@ -43,7 +43,7 @@ export const TimerProvider = ({ children, onTimeUp }) => {
         clearInterval(interval);
       }
     };
-  }, [isRunning, timeLeft]);
+  }, [isRunning, timeLeft, onTimeUp]);
 
   const startTimer = () => {
     setHasStarted(true);

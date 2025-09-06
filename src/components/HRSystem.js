@@ -16,7 +16,8 @@ const HRSystem = ({
   transferComplete,
   feedbackStep,
   feedbackType,
-  reviewSubmitted
+  reviewSubmitted,
+  feedbackSubmitted
 }) => {
   const renderHRContent = () => {
     switch (workflowType) {
@@ -51,6 +52,7 @@ const HRSystem = ({
             employeeSelected={employeeSelected}
             feedbackType={feedbackType}
             reviewSubmitted={reviewSubmitted}
+            feedbackSubmitted={feedbackSubmitted}
           />
         );
       

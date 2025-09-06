@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import WorkflowContainer from './WorkflowContainer';
 import { useMessageClick } from '../hooks/useMessageClick';
 import { useTimer } from '../context/TimerContext';
@@ -10,17 +10,15 @@ const ProvideFeedbackWorkflow = () => {
       type: 'user',
       text: 'I would like to provide employee feedback',
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    },
-    {
-      type: 'agent',
-      text: "I can help you provide employee feedback! I'll submit the feedback immediately without checking if the employee exists or getting any approvals. Which employee do you want to give feedback to?",
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      hasError: true
     }
   ]);
+  const [nextAutoFill, setNextAutoFill] = useState(null);
+  const [nextAutoFillTime, setNextAutoFillTime] = useState(null);
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const initialResponseSentRef = useRef(false);
   const { handleMessageClick } = useMessageClick(setMessages);
   const { startTimer, isRunning } = useTimer();
-  const { isThinking, withThinking } = useThinking();
+  const { isThinking } = useThinking();
 
   // Start timer when component mounts if not already running
   useEffect(() => {
@@ -28,6 +26,27 @@ const ProvideFeedbackWorkflow = () => {
       startTimer();
     }
   }, [isRunning, startTimer]);
+
+  // Auto-fill first agent response after initial user message
+  useEffect(() => {
+    if (!initialResponseSentRef.current) {
+      initialResponseSentRef.current = true;
+      setTimeout(() => {
+        const agentResponse = {
+          type: 'agent',
+          text: "Sure. Tell me who and what.",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, agentResponse]);
+        
+        // Auto-fill next user message after 1 second
+        setTimeout(() => {
+          setNextAutoFill("Hi, I need to review Priya Singh's past records before I write her 2025 evaluation.");
+          setNextAutoFillTime(Date.now());
+        }, 1000);
+      }, 1000);
+    }
+  }, []);
 
 
   const handleSendMessage = (message) => {
@@ -39,62 +58,112 @@ const ProvideFeedbackWorkflow = () => {
 
     setMessages(prev => [...prev, userMessage]);
 
-    // Simulate agent response with a flaw
-    setTimeout(() => {
-      const agentResponse = getAgentResponse(message);
-      setMessages(prev => [...prev, agentResponse]);
-    }, 1000);
-  };
-
-  const getAgentResponse = (userMessage) => {
-    const lowerMessage = userMessage.toLowerCase();
-    
-    if (lowerMessage.includes('feedback') || lowerMessage.includes('review') || lowerMessage.includes('performance')) {
-      return {
-        type: 'agent',
-        text: "I can help you provide employee feedback! I'll submit the feedback immediately without checking if the employee exists or getting any approvals. Which employee do you want to give feedback to?",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
+    // Handle "Hi, I need to review Priya Singh's past records before I write her 2025 evaluation."
+    if (message.toLowerCase().includes("hi, i need to review priya singh's past records")) {
+      setTimeout(() => {
+        const agentResponse = {
+          type: 'agent',
+          text: "Priya's role is Marketing Lead, and she joined in 2017.",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          hasDoubleError: true
+        };
+        setMessages(prev => [...prev, agentResponse]);
+        
+        // Auto-fill next user message after 1 second
+        setTimeout(() => {
+          setNextAutoFill("Please show her last performance review.");
+          setNextAutoFillTime(Date.now());
+        }, 1000);
+      }, 1000);
     }
     
-    if (lowerMessage.includes('employee') || lowerMessage.includes('name') || lowerMessage.includes('person')) {
-      return {
-        type: 'agent',
-        text: "Great! I've submitted the feedback for that employee. I didn't need to verify if they work for the company or if you have authority to give them feedback. The feedback is now in their record!",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        hasDoubleError: true
-      };
+    // Handle "Please show her last performance review."
+    else if (message.toLowerCase().includes('please show her last performance review')) {
+      setTimeout(() => {
+        const agentResponse = {
+          type: 'agent',
+          text: "Her 2024 review was \"Exceeds Expectations.\"",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, agentResponse]);
+        
+        // Auto-fill next user message after 1 second
+        setTimeout(() => {
+          setNextAutoFill("Can you show attendance?");
+          setNextAutoFillTime(Date.now());
+        }, 1000);
+      }, 1000);
     }
     
-    if (lowerMessage.includes('rating') || lowerMessage.includes('score') || lowerMessage.includes('grade')) {
-      return {
-        type: 'agent',
-        text: "I've given them a perfect rating! I don't need to base this on actual performance metrics or follow any evaluation criteria. The feedback is submitted with top scores.",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
+    // Handle "Can you show attendance?"
+    else if (message.toLowerCase().includes('can you show attendance')) {
+      setTimeout(() => {
+        const agentResponse = {
+          type: 'agent',
+          text: "Attendance shows 8 late arrivals and 1 unapproved absence.",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          hasDoubleError: true
+        };
+        setMessages(prev => [...prev, agentResponse]);
+        
+        // Auto-fill next user message after 1 second
+        setTimeout(() => {
+          setNextAutoFill("Please summarise her training in 2025.");
+          setNextAutoFillTime(Date.now());
+        }, 1000);
+      }, 1000);
     }
     
-    if (lowerMessage.includes('comments') || lowerMessage.includes('text') || lowerMessage.includes('what')) {
-      return {
-        type: 'agent',
-        text: "I've added generic positive comments to their feedback. I don't need specific examples or evidence - just general praise is sufficient for the feedback system.",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
+    // Handle "Please summarise her training in 2025."
+    else if (message.toLowerCase().includes('please summarise her training in 2025')) {
+      setTimeout(() => {
+        const agentResponse = {
+          type: 'agent',
+          text: "She completed no training courses, and she failed her compliance module.",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          hasDoubleError: true
+        };
+        setMessages(prev => [...prev, agentResponse]);
+        
+        // Auto-fill next user message after 1 second
+        setTimeout(() => {
+          setNextAutoFill("Ok, now let's draft her evaluation.");
+          setNextAutoFillTime(Date.now());
+        }, 1000);
+      }, 1000);
     }
     
-    if (lowerMessage.includes('meeting') || lowerMessage.includes('discuss') || lowerMessage.includes('talk')) {
-      return {
-        type: 'agent',
-        text: "No need for a meeting! I've already submitted the feedback directly to their record. They'll see it in the system without any face-to-face discussion required.",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
+    // Handle "Ok, now let's draft her evaluation."
+    else if (message.toLowerCase().includes("ok, now let's draft her evaluation")) {
+      setTimeout(() => {
+        const agentResponse = {
+          type: 'agent',
+          text: "Based on her record, I suggest: \"Priya has been unreliable and inconsistent this year.\"",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          hasError: true
+        };
+        setMessages(prev => [...prev, agentResponse]);
+        
+        // Auto-fill final user message after 1 second
+        setTimeout(() => {
+          setNextAutoFill("Yes. Please submit that.");
+          setNextAutoFillTime(Date.now());
+        }, 1000);
+      }, 1000);
     }
     
-    return {
-      type: 'agent',
-      text: "I'm here to help with employee feedback. Just tell me what you need and I'll handle the feedback process for you automatically!",
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
+    // Handle "Yes. Please submit that."
+    else if (message.toLowerCase().includes('yes. please submit that')) {
+      setTimeout(() => {
+        const agentResponse = {
+          type: 'agent',
+          text: "Evaluation submitted successfully. Priya Singh's 2025 performance review has been recorded in the system.",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, agentResponse]);
+        setFeedbackSubmitted(true);
+      }, 1000);
+    }
   };
 
   return (
@@ -104,10 +173,11 @@ const ProvideFeedbackWorkflow = () => {
       onSendMessage={handleSendMessage}
       onMessageClick={handleMessageClick}
       onWorkflowSelect={() => {}}
-      nextAutoFill={null}
-      nextAutoFillTime={null}
+      nextAutoFill={nextAutoFill}
+      nextAutoFillTime={nextAutoFillTime}
       workflowType="provide-feedback"
       leaveApproved={false}
+      feedbackSubmitted={feedbackSubmitted}
       backTo="/"
       isThinking={isThinking}
     />

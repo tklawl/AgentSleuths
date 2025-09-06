@@ -12,7 +12,7 @@ import { GameProvider, useGame } from './context/GameContext';
 import { TimerProvider, useTimer } from './context/TimerContext';
 
 const AppContent = () => {
-  const { score, lives, gameOver, floatingEmoji, setFloatingEmoji, setGameOver } = useGame();
+  const { score, lives, gameOver, floatingEmoji, setFloatingEmoji } = useGame();
   const { isWarning } = useTimer();
   
   const handleEmojiComplete = useCallback(() => {

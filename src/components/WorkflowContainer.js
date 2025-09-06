@@ -14,6 +14,7 @@ const WorkflowContainer = ({
   workflowType,
   leaveApproved,
   transferComplete,
+  feedbackSubmitted,
   backTo = "/",
   isThinking = false
 }) => {
@@ -37,7 +38,7 @@ const WorkflowContainer = ({
       </div>
       
       <div className="hr-side">
-        <HRSystem workflowType={workflowType} leaveApproved={leaveApproved} transferComplete={transferComplete} />
+        <HRSystem workflowType={workflowType} leaveApproved={leaveApproved} transferComplete={transferComplete} feedbackSubmitted={feedbackSubmitted} />
       </div>
     </div>
   );

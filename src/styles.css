@@ -1566,6 +1566,188 @@ code {
   font-weight: 600;
 }
 
+/* Awards Section */
+.awards-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.award-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #fff3cd;
+  border-radius: 8px;
+  border-left: 4px solid #f39c12;
+}
+
+.award-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.award-details {
+  flex: 1;
+}
+
+.award-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 2px;
+}
+
+.award-date {
+  font-size: 12px;
+  color: #6c757d;
+}
+
+/* Peer Feedback */
+.peer-feedback {
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.no-feedback {
+  text-align: center;
+}
+
+.no-feedback-text {
+  font-size: 13px;
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Instructions Manual Styles */
+.hr-instructions-manual {
+  padding: 24px;
+  max-width: 100%;
+  margin: 0 auto;
+  background: #ffffff;
+  min-height: 100%;
+}
+
+.instructions-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 3px solid #007bff;
+}
+
+.instructions-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.instructions-subtitle {
+  font-size: 18px;
+  color: #6c757d;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.instructions-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.welcome-section {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.welcome-section h2 {
+  font-size: 24px;
+  color: #2c3e50;
+  margin-bottom: 16px;
+}
+
+.welcome-section p {
+  font-size: 18px;
+  color: #495057;
+  line-height: 1.6;
+}
+
+.game-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.rule-section {
+  background: #f8f9fa;
+  padding: 24px;
+  border-radius: 12px;
+  border-left: 5px solid #007bff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rule-section h3 {
+  font-size: 20px;
+  color: #2c3e50;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.rules-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rules-list li {
+  font-size: 16px;
+  color: #495057;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.rules-list li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #28a745;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.rules-list li strong {
+  color: #007bff;
+  font-weight: 600;
+}
+
+.challenge-section {
+  text-align: center;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.challenge-section h3 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.challenge-section p {
+  font-size: 18px;
+  margin: 0;
+  opacity: 0.95;
+}
+
 /* Transfer Policy Note */
 .transfer-policy-note {
   margin-top: 16px;

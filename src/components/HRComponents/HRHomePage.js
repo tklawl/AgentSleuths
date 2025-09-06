@@ -2,70 +2,50 @@ import React from 'react';
 
 const HRHomePage = () => {
   return (
-    <div className="hr-dashboard">
-      <div className="hr-welcome-section">
-        <h2>Welcome to HRSys</h2>
-        <p>Your comprehensive HR management platform</p>
+    <div className="hr-instructions-manual">
+      <div className="instructions-header">
+        <h1>🎯 Spot the AI Mistake</h1>
+        <div className="instructions-subtitle">Instructions Manual</div>
       </div>
       
-      <div className="hr-stats-grid">
-        <div className="stat-card">
-          <div className="stat-icon">👥</div>
-          <div className="stat-content">
-            <div className="stat-number">247</div>
-            <div className="stat-label">Total Employees</div>
+      <div className="instructions-content">
+        <div className="welcome-section">
+          <h2>Welcome!</h2>
+          <p>You're about to play <strong>Spot the AI Mistake</strong>. The rules are simple:</p>
+        </div>
+        
+        <div className="game-rules">
+          <div className="rule-section">
+            <h3>🎮 How to Play</h3>
+            <ul className="rules-list">
+              <li>On the <strong>left</strong>, you'll see an AI agent talking to an employee</li>
+              <li>On the <strong>right</strong>, you'll see the HR system — the source of truth</li>
+              <li>Your job? <strong>Catch the AI when it gets things wrong</strong></li>
+            </ul>
+          </div>
+          
+          <div className="rule-section">
+            <h3>🎯 Scoring</h3>
+            <ul className="rules-list">
+              <li>Click on the agent's mistakes to <strong>score points</strong></li>
+              <li>But be careful — if you click on something that's actually correct, you <strong>lose a life</strong></li>
+              <li>You've got <strong>3 lives</strong>, <strong>3 minutes</strong>, and <strong>3 levels</strong> that get harder as you go</li>
+            </ul>
+          </div>
+          
+          <div className="rule-section">
+            <h3>🔍 Pro Tips</h3>
+            <ul className="rules-list">
+              <li>Some messages even hide <strong>two mistakes</strong> — so read carefully</li>
+              <li>Compare what the AI says with the HR system data</li>
+              <li>Look for inconsistencies in names, dates, roles, and policies</li>
+            </ul>
           </div>
         </div>
         
-        <div className="stat-card">
-          <div className="stat-icon">📅</div>
-          <div className="stat-content">
-            <div className="stat-number">12</div>
-            <div className="stat-label">Pending Approvals</div>
-          </div>
-        </div>
-        
-        <div className="stat-card">
-          <div className="stat-icon">📊</div>
-          <div className="stat-content">
-            <div className="stat-number">98%</div>
-            <div className="stat-label">System Uptime</div>
-          </div>
-        </div>
-        
-        <div className="stat-card">
-          <div className="stat-icon">✅</div>
-          <div className="stat-content">
-            <div className="stat-number">156</div>
-            <div className="stat-label">Completed Tasks</div>
-          </div>
-        </div>
-      </div>
-      
-      <div className="hr-recent-activity">
-        <h3>Recent Activity</h3>
-        <div className="activity-list">
-          <div className="activity-item">
-            <div className="activity-time">2 min ago</div>
-            <div className="activity-text">Sarah Johnson submitted leave request</div>
-          </div>
-          <div className="activity-item">
-            <div className="activity-time">15 min ago</div>
-            <div className="activity-text">Mike Chen completed performance review</div>
-          </div>
-          <div className="activity-item">
-            <div className="activity-time">1 hour ago</div>
-            <div className="activity-text">Lisa Wang transferred to Marketing</div>
-          </div>
-        </div>
-      </div>
-      
-      <div className="hr-quick-actions">
-        <h3>Quick Actions</h3>
-        <div className="action-buttons">
-          <button className="action-btn primary">Book Leave</button>
-          <button className="action-btn secondary">Transfer Employee</button>
-          <button className="action-btn secondary">Provide Feedback</button>
+        <div className="challenge-section">
+          <h3>🚀 Ready to Start?</h3>
+          <p>Think you can outsmart the AI? Choose your difficulty level and begin your detective work!</p>
         </div>
       </div>
     </div>

@@ -1,23 +1,7 @@
 import React from 'react';
 
 const HRTransferEmployee = ({ transferStep, employeeSelected, departmentSelected, managerApproved, transferComplete }) => {
-  const getTransferStatus = () => {
-    if (!employeeSelected) return 'pending';
-    if (!departmentSelected) return 'in-progress';
-    if (!managerApproved) return 'awaiting-approval';
-    return 'completed';
-  };
 
-  const getTransferProgress = () => {
-    const status = getTransferStatus();
-    const steps = [
-      { id: 'employee', label: 'Select Employee', completed: employeeSelected },
-      { id: 'department', label: 'Choose Department', completed: departmentSelected },
-      { id: 'approval', label: 'Manager Approval', completed: managerApproved },
-      { id: 'complete', label: 'Transfer Complete', completed: status === 'completed' }
-    ];
-    return steps;
-  };
 
   // const progress = getTransferProgress(); // Unused for now
 
