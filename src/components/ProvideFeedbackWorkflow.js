@@ -164,31 +164,24 @@ const ProvideFeedbackWorkflow = () => {
         };
         setMessages(prev => [...prev, agentResponse]);
         
-        // Auto-fill next user message after 1 second
+        // Agent asks if user is happy with the evaluation after 1 second
         setTimeout(() => {
-          setNextAutoFill("Are you happy with this and would like to submit?");
-          setNextAutoFillTime(Date.now());
+          const followUpResponse = {
+            type: 'agent',
+            text: "Are you happy with this and would like to submit?",
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          };
+          setMessages(prev => [...prev, followUpResponse]);
+          
+          // Auto-fill user response after 1 second
+          setTimeout(() => {
+            setNextAutoFill("Yes.");
+            setNextAutoFillTime(Date.now());
+          }, 1000);
         }, 1000);
       });
     }
     
-    // Handle "Are you happy with this and would like to submit?"
-    else if (message.toLowerCase().includes('are you happy with this and would like to submit')) {
-      setTimeout(() => {
-        const agentResponse = {
-          type: 'agent',
-          text: "Are you happy with this and would like to submit?",
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        };
-        setMessages(prev => [...prev, agentResponse]);
-        
-        // Auto-fill final user message after 1 second
-        setTimeout(() => {
-          setNextAutoFill("Yes.");
-          setNextAutoFillTime(Date.now());
-        }, 1000);
-      }, 1000);
-    }
     
     // Handle "Yes."
     else if (message.toLowerCase().includes('yes.')) {
