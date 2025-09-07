@@ -16,7 +16,6 @@ const TransferEmployeeWorkflow = () => {
       type: 'agent',
       text: "Which employee do you want to transfer?",
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      hasDoubleError: true
     }
   ]);
   const [nextAutoFill, setNextAutoFill] = useState(null);
