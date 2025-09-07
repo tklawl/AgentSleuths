@@ -76,28 +76,28 @@ const HRProvideFeedback = ({ feedbackSubmitted }) => {
             <h3>Training Achievements 2025</h3>
             <div className="training-badges">
               <div className="badge-item">
-                <div className="badge-icon">📊</div>
+                <div className="badge-icon">📈</div>
                 <div className="badge-content">
                   <div className="badge-title">Digital Marketing Analytics</div>
                   <div className="badge-description">Advanced data analysis and campaign performance tracking</div>
                 </div>
               </div>
               <div className="badge-item">
-                <div className="badge-icon">📱</div>
+                <div className="badge-icon">📲</div>
                 <div className="badge-content">
                   <div className="badge-title">Social Media Strategy</div>
-                  <div className="badge-description">Multi-platform content planning and engagement optimization</div>
+                  <div className="badge-description">Multi-platform content planning and engagement optimisation</div>
                 </div>
               </div>
               <div className="badge-item">
-                <div className="badge-icon">✍️</div>
+                <div className="badge-icon">✎</div>
                 <div className="badge-content">
                   <div className="badge-title">Content Creation</div>
                   <div className="badge-description">Creative writing and visual content development</div>
                 </div>
               </div>
               <div className="badge-item">
-                <div className="badge-icon">📋</div>
+                <div className="badge-icon">📄</div>
                 <div className="badge-content">
                   <div className="badge-title">Project Management</div>
                   <div className="badge-description">Agile methodologies and team coordination</div>
@@ -175,7 +175,7 @@ const HRProvideFeedback = ({ feedbackSubmitted }) => {
             <h4>Awards & Recognition</h4>
             <div className="awards-section">
               <div className="award-item">
-                <div className="award-icon">🏆</div>
+                <div className="award-icon">🏅</div>
                 <div className="award-details">
                   <div className="award-title">Employee of the Month</div>
                   <div className="award-date">March 2025</div>

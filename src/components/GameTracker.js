@@ -11,7 +11,7 @@ const GameTracker = ({ score, lives }) => {
         <div className="stat-item">
           <span className="stat-label">Lives:</span>
           <span className="stat-value lives">
-            {'❤️'.repeat(lives)}
+            {'♥'.repeat(lives)}
           </span>
         </div>
       </div>

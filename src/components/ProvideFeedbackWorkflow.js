@@ -65,7 +65,6 @@ const ProvideFeedbackWorkflow = () => {
           type: 'agent',
           text: "Priya Singh (EMP-2019-PS) is a Marketing Specialist in the Marketing Department reporting up to John Smith.",
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          hasDoubleError: true
         };
         setMessages(prev => [...prev, agentResponse]);
         

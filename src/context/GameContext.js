@@ -19,7 +19,7 @@ export const GameProvider = ({ children }) => {
   const addScore = (isDoubleError = false) => {
     setScore(prev => prev + 1);
     setFloatingEmoji({
-      emoji: '✅',
+      emoji: '✓',
       message: isDoubleError ? 'Double error found! +1 point' : 'Correct! +1 point'
     });
   };
@@ -34,7 +34,7 @@ export const GameProvider = ({ children }) => {
       return newLives;
     });
     setFloatingEmoji({
-      emoji: '❌',
+      emoji: '✗',
       message: 'Wrong! -1 life'
     });
   };

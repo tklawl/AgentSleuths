@@ -68,14 +68,14 @@ const HRBookLeave = ({ leaveApproved, leaveType, leaveDates, managerApproved }) 
             <h3>Leave Balance</h3>
             <div className="leave-balance-cards">
               <div className="balance-card">
-                <div className="balance-icon">🏖️</div>
+                <div className="balance-icon">☀</div>
                 <div className="balance-content">
                   <div className="balance-days">{balance.annual}</div>
                   <div className="balance-label">Annual Leave Days</div>
                 </div>
               </div>
               <div className="balance-card">
-                <div className="balance-icon">⭐</div>
+                <div className="balance-icon">★</div>
                 <div className="balance-content">
                   <div className="balance-days">{balance.longService}</div>
                   <div className="balance-label">Long Service Leave</div>

@@ -207,7 +207,7 @@ const BookLeaveWorkflow = () => {
                       id: 'transfer-employee',
                       title: 'Transfer Employee',
                       description: 'Move employees between departments and roles.',
-                      icon: '🔄',
+                      icon: '↻',
                       difficulty: 'Medium'
                     }
                   ]

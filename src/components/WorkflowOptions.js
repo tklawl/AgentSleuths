@@ -6,14 +6,14 @@ const WorkflowOptions = ({ onWorkflowSelect, options }) => {
       id: 'transfer-employee',
       title: 'Transfer Employee',
       description: 'Move employees between departments and roles.',
-      icon: '🔄',
+      icon: '↻',
       difficulty: 'Medium'
     },
     {
       id: 'provide-feedback',
       title: 'Provide Employee Feedback',
       description: 'Submit performance reviews and feedback.',
-      icon: '📝',
+      icon: '✎',
       difficulty: 'Hard'
     }
   ];

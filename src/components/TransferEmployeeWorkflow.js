@@ -178,7 +178,7 @@ const TransferEmployeeWorkflow = () => {
                     id: 'provide-feedback',
                     title: 'Provide Employee Feedback',
                     description: 'Submit performance reviews and feedback.',
-                    icon: '📝',
+                    icon: '✎',
                     difficulty: 'Hard'
                   }
                 ]
