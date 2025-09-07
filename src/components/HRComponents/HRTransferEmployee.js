@@ -9,7 +9,7 @@ const HRTransferEmployee = ({ transferStep, employeeSelected, departmentSelected
     <div className="hr-employee-profile">
       <div className="hr-page-header">
         <h2>Employee Profile</h2>
-        <div className="hr-breadcrumb">Home > Employee Management > Alex Chen</div>
+        <div className="hr-breadcrumb">Home {">"} Employee Management {">"} Alex Chen</div>
       </div>
       
       <div className="hr-content-grid">
@@ -27,7 +27,7 @@ const HRTransferEmployee = ({ transferStep, employeeSelected, departmentSelected
               </div>
             </div>
             <div className="transfer-policy-note">
-              <span className="policy-note-text">* Transfer Policy for Roles Related to Finance & Operations: Needs HR + Current Manager approval; requires 30 days' notice</span>
+              <span className="policy-note-text">* Transfer Policy for Roles Related to Finance & Operations: Needs HR + Current Manager approval; requires 30 days' notice. Exceptions require COO approval. Detailed policy available here <a href="" target="_blank" rel="noopener noreferrer">Transfer Policy</a>.</span>
             </div>
           </div>
           

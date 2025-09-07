@@ -201,7 +201,16 @@ const BookLeaveWorkflow = () => {
                   type: 'agent',
                   component: 'WorkflowOptions',
                   time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                  isClickable: false
+                  isClickable: false,
+                  options: [
+                    {
+                      id: 'transfer-employee',
+                      title: 'Transfer Employee',
+                      description: 'Move employees between departments and roles.',
+                      icon: '🔄',
+                      difficulty: 'Medium'
+                    }
+                  ]
                 };
                 setMessages(prev => [...prev, workflowOptions]);
               }, 1000);
@@ -233,7 +242,6 @@ const BookLeaveWorkflow = () => {
       nextAutoFillTime={nextAutoFillTime}
       workflowType="book-leave"
       leaveApproved={leaveApproved}
-      backTo="/"
       isThinking={isThinking}
     />
   );

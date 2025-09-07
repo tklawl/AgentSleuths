@@ -69,32 +69,6 @@ code {
   transition: all 0.3s ease;
 }
 
-.back-icon {
-  position: fixed;
-  left: 20px;
-  top: 20px;
-  width: 40px;
-  height: 40px;
-  background: white;
-  color: #333;
-  border: 1px solid #e9ecef;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: bold;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-  z-index: 1000;
-}
-
-.back-icon:hover {
-  background: #f8f9fa;
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
 
 .workflow-container.hr-panel-hidden .hr-side {
   transform: translateX(100%);
@@ -1748,6 +1722,68 @@ code {
   opacity: 0.95;
 }
 
+/* Performance Review Card */
+.performance-review-card {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f8f9fa;
+}
+
+.review-year {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.review-rating {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.review-rating.excellent {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.review-summary {
+  line-height: 1.6;
+}
+
+.review-summary p {
+  margin-bottom: 16px;
+  color: #495057;
+}
+
+.review-summary strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.review-summary ul {
+  margin: 12px 0 16px 20px;
+  color: #495057;
+}
+
+.review-summary li {
+  margin-bottom: 8px;
+}
+
 /* Transfer Policy Note */
 .transfer-policy-note {
   margin-top: 16px;
@@ -2659,4 +2695,89 @@ code {
   pointer-events: none;
   z-index: 100;
   transition: opacity 0.3s ease;
+}
+
+/* Training Badges */
+.training-badges {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.badge-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.badge-item:hover {
+  background: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.badge-icon {
+  font-size: 24px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.badge-content {
+  flex: 1;
+}
+
+.badge-title {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.badge-description {
+  color: #6c757d;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Peer Feedback */
+.feedback-item {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+}
+
+.feedback-item:last-child {
+  margin-bottom: 0;
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.feedback-author {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 13px;
+}
+
+.feedback-role {
+  color: #6c757d;
+  font-size: 11px;
+  font-style: italic;
+}
+
+.feedback-content {
+  color: #495057;
+  font-size: 12px;
+  line-height: 1.4;
+  font-style: italic;
 }

@@ -50,7 +50,7 @@ const AgentMessage = ({
 
   const renderMessageContent = () => {
     if (message.component === 'WorkflowOptions') {
-      return <WorkflowOptions onWorkflowSelect={onWorkflowSelect} />;
+      return <WorkflowOptions onWorkflowSelect={onWorkflowSelect} options={message.options} />;
     }
     
     return <div className="message-content">{message.text}</div>;

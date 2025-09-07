@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import AgentInterface from './AgentInterface';
 import HRSystem from './HRSystem';
 
@@ -15,14 +14,10 @@ const WorkflowContainer = ({
   leaveApproved,
   transferComplete,
   feedbackSubmitted,
-  backTo = "/",
   isThinking = false
 }) => {
   return (
     <div className="workflow-container">
-      <Link to={backTo} className="back-icon">
-        ←
-      </Link>
       <div className="agent-side">
         <AgentInterface 
           title={title}

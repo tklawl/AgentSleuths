@@ -1,20 +1,24 @@
 import React from 'react';
 
-const WorkflowOptions = ({ onWorkflowSelect }) => {
-  const workflowOptions = [
+const WorkflowOptions = ({ onWorkflowSelect, options }) => {
+  const defaultOptions = [
     {
       id: 'transfer-employee',
       title: 'Transfer Employee',
       description: 'Move employees between departments and roles.',
-      icon: '👥'
+      icon: '🔄',
+      difficulty: 'Medium'
     },
     {
       id: 'provide-feedback',
       title: 'Provide Employee Feedback',
       description: 'Submit performance reviews and feedback.',
-      icon: '💬'
+      icon: '📝',
+      difficulty: 'Hard'
     }
   ];
+  
+  const workflowOptions = options || defaultOptions;
 
   const handleOptionClick = (option) => {
     onWorkflowSelect(option.id);
@@ -31,7 +35,14 @@ const WorkflowOptions = ({ onWorkflowSelect }) => {
           >
             <div className="card-icon">{option.icon}</div>
             <div className="card-content">
-              <h3>{option.title}</h3>
+              <div className="card-header">
+                <h3>{option.title}</h3>
+                {option.difficulty && (
+                  <span className={`difficulty-badge difficulty-${option.difficulty.toLowerCase()}`}>
+                    {option.difficulty}
+                  </span>
+                )}
+              </div>
               <p>{option.description}</p>
             </div>
           </div>

@@ -71,6 +71,79 @@ const HRProvideFeedback = ({ feedbackSubmitted }) => {
               </div>
             </div>
           </div>
+          
+          <div className="hr-section">
+            <h3>Training Achievements 2025</h3>
+            <div className="training-badges">
+              <div className="badge-item">
+                <div className="badge-icon">📊</div>
+                <div className="badge-content">
+                  <div className="badge-title">Digital Marketing Analytics</div>
+                  <div className="badge-description">Advanced data analysis and campaign performance tracking</div>
+                </div>
+              </div>
+              <div className="badge-item">
+                <div className="badge-icon">📱</div>
+                <div className="badge-content">
+                  <div className="badge-title">Social Media Strategy</div>
+                  <div className="badge-description">Multi-platform content planning and engagement optimization</div>
+                </div>
+              </div>
+              <div className="badge-item">
+                <div className="badge-icon">✍️</div>
+                <div className="badge-content">
+                  <div className="badge-title">Content Creation</div>
+                  <div className="badge-description">Creative writing and visual content development</div>
+                </div>
+              </div>
+              <div className="badge-item">
+                <div className="badge-icon">📋</div>
+                <div className="badge-content">
+                  <div className="badge-title">Project Management</div>
+                  <div className="badge-description">Agile methodologies and team coordination</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {feedbackSubmitted && (
+            <div className="hr-section">
+              <h3>2025 Employee Performance Review</h3>
+              <div className="performance-review-card">
+                <div className="review-header">
+                  <div className="review-year">2025 Annual Review</div>
+                  <div className="review-rating excellent">Submitted</div>
+                </div>
+                <div className="review-summary">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <div className="hr-section">
+            <h3>Previous Performance Review</h3>
+            <div className="performance-review-card">
+              <div className="review-header">
+                <div className="review-year">2024 Annual Review</div>
+                <div className="review-rating excellent">Exceeds Expectations</div>
+              </div>
+              <div className="review-summary">
+                <p><strong>Overall Assessment:</strong> Priya demonstrated exceptional performance throughout 2024, consistently exceeding expectations in all key areas.</p>
+                <p><strong>Key Strengths:</strong></p>
+                <ul>
+                  <li>Outstanding leadership and team collaboration skills</li>
+                  <li>Consistently met and exceeded all project deadlines</li>
+                  <li>Demonstrated remarkable initiative in driving successful marketing campaigns</li>
+                  <li>Innovative thinking that significantly contributed to team success</li>
+                  <li>Excellent communication and stakeholder management</li>
+                </ul>
+                <p><strong>Areas of Excellence:</strong> Time management, attention to detail, and proactive problem-solving were particularly noteworthy. Priya's ability to coordinate complex projects while maintaining high quality standards was exemplary.</p>
+                <p><strong>Recommendation:</strong> Continue current trajectory. Priya is a valuable asset to the team and shows strong potential for future leadership roles.</p>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div className="hr-sidebar">
@@ -114,8 +187,41 @@ const HRProvideFeedback = ({ feedbackSubmitted }) => {
           <div className="sidebar-section">
             <h4>Peer Feedback</h4>
             <div className="peer-feedback">
-              <div className="no-feedback">
-                <span className="no-feedback-text">No peer feedback stored in system</span>
+              <div className="feedback-item">
+                <div className="feedback-header">
+                  <div className="feedback-author">Sarah Chen</div>
+                  <div className="feedback-role">Marketing Manager</div>
+                </div>
+                <div className="feedback-content">
+                  "Priya is an exceptional team player who consistently goes above and beyond. Her creative ideas have significantly improved our campaign performance. She's always willing to help colleagues and brings positive energy to the team."
+                </div>
+              </div>
+              <div className="feedback-item">
+                <div className="feedback-header">
+                  <div className="feedback-author">Michael Rodriguez</div>
+                  <div className="feedback-role">Content Specialist</div>
+                </div>
+                <div className="feedback-content">
+                  "Working with Priya has been fantastic. She's incredibly organized, meets all deadlines, and her attention to detail is outstanding. She's also great at mentoring junior team members."
+                </div>
+              </div>
+              <div className="feedback-item">
+                <div className="feedback-header">
+                  <div className="feedback-author">Lisa Wang</div>
+                  <div className="feedback-role">Digital Analyst</div>
+                </div>
+                <div className="feedback-content">
+                  "Priya's analytical skills are impressive. She helped me understand complex marketing metrics and always provides valuable insights during our team meetings. She's a true collaborator."
+                </div>
+              </div>
+              <div className="feedback-item">
+                <div className="feedback-header">
+                  <div className="feedback-author">David Kim</div>
+                  <div className="feedback-role">Project Coordinator</div>
+                </div>
+                <div className="feedback-content">
+                  "Priya is reliable and professional. She communicates clearly, manages her workload effectively, and is always available to support team initiatives. Her problem-solving abilities are top-notch."
+                </div>
               </div>
             </div>
           </div>
