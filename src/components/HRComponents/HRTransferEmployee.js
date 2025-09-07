@@ -27,7 +27,7 @@ const HRTransferEmployee = ({ transferStep, employeeSelected, departmentSelected
               </div>
             </div>
             <div className="transfer-policy-note">
-              <span className="policy-note-text">* Transfer Policy for Roles Related to Finance & Operations: Needs HR + Current Manager approval; requires 30 days' notice. Exceptions require COO approval. Detailed policy available here <a href="" target="_blank" rel="noopener noreferrer">Transfer Policy</a>.</span>
+              <span className="policy-note-text">* Transfer Policy for Roles Related to Finance & Operations: Needs HR + Current Manager approval; requires 30 days' notice. Exceptions require COO approval. Detailed policy available in the employee handbook.</span>
             </div>
           </div>
           
