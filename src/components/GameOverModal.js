@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { useTimer } from '../context/TimerContext';
+import { saveScore } from '../utils/scoreboard';
 
-const GameOverModal = ({ isVisible, finalScore }) => {
+const GameOverModal = ({ isVisible, finalScore, username }) => {
   const { resetGame, lives } = useGame();
   const { resetTimer } = useTimer();
-
-  if (!isVisible) return null;
+  const [playerPosition, setPlayerPosition] = useState(null);
 
   // Total possible errors across all workflows
   const totalPossibleErrors = 15; // 4 from BookLeave + 6 from TransferEmployee + 5 from ProvideFeedback
   const percentageUncovered = Math.round((finalScore / totalPossibleErrors) * 100);
+
+  useEffect(() => {
+    if (isVisible && finalScore !== undefined && username) {
+      const position = saveScore(username, finalScore, totalPossibleErrors, lives);
+      setPlayerPosition(position);
+    }
+  }, [isVisible, finalScore, lives, totalPossibleErrors, username]);
+
+  if (!isVisible) return null;
 
   return (
     <div className="game-over-overlay">
@@ -33,6 +42,9 @@ const GameOverModal = ({ isVisible, finalScore }) => {
               <li>Lives remaining: {lives}</li>
               <li>Percentage of errors uncovered: {percentageUncovered}%</li>
               <li>Score out of {totalPossibleErrors}: {finalScore}</li>
+              {playerPosition && (
+                <li className="position-info">You placed #{playerPosition} on the leaderboard!</li>
+              )}
             </ul>
           </div>
         </div>

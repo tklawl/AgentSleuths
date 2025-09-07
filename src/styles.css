@@ -115,6 +115,7 @@ code {
   padding: 20px;
   border-left: 1px solid #e0e0e0;
   overflow: hidden;
+  position: relative;
   transition: all 0.3s ease;
 }
 
@@ -2610,6 +2611,244 @@ code {
 .floating-emoji .emoji-container.negative-container {
   background: #f8d7da;
   border: 2px solid #dc3545;
+}
+
+/* Username Modal Styles */
+.username-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.username-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 0;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.username-modal .modal-header {
+  background: #007bff;
+  color: white;
+  padding: 24px;
+  text-align: center;
+}
+
+.username-modal .modal-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+}
+
+.username-modal .modal-header p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 16px;
+}
+
+.username-modal .modal-content {
+  display: flex;
+  min-height: 400px;
+}
+
+.username-section {
+  flex: 1;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #f8f9fa;
+}
+
+.leaderboard-section {
+  flex: 1;
+  padding: 32px;
+  background: white;
+}
+
+.input-group {
+  margin-bottom: 24px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.start-game-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.start-game-btn:hover {
+  background: #0056b3;
+}
+
+.leaderboard-section h3 {
+  margin: 0 0 24px 0;
+  color: #2c3e50;
+  font-size: 20px;
+  text-align: center;
+}
+
+.leaderboard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 40px 12px 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+  position: relative;
+}
+
+.leaderboard-item:first-child {
+  border-left-color: #ffc107;
+}
+
+.leaderboard-item:nth-child(2) {
+  border-left-color: #6c757d;
+}
+
+.leaderboard-item:nth-child(3) {
+  border-left-color: #fd7e14;
+}
+
+.rank {
+  font-weight: 700;
+  font-size: 18px;
+  color: #2c3e50;
+  min-width: 40px;
+}
+
+.player-info {
+  flex: 1;
+  margin-left: 12px;
+}
+
+.player-name {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 14px;
+}
+
+.player-score {
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.player-percentage {
+  font-weight: 600;
+  color: #28a745;
+  font-size: 14px;
+}
+
+.no-scores {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 24px;
+}
+
+.remove-user-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.remove-user-btn:hover {
+  background: #c82333;
+}
+
+/* Game Over Modal Position Info */
+.position-info {
+  color: #007bff !important;
+  font-weight: 600 !important;
+}
+
+/* Username Display Styles */
+.username-display {
+  position: fixed;
+  left: calc(50% + 20px);
+  top: 20px;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.username-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.username-label {
+  font-size: 12px;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.username-value {
+  font-size: 14px;
+  color: #2c3e50;
+  font-weight: 600;
 }
 
 /* Timer Styles */
